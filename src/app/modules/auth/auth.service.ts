@@ -10,7 +10,7 @@ import moment from 'moment'
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
   const isUserExists = await User.findOne({
-    username: payload?.username,
+    email: payload?.email,
   }).select('+password')
   if (!isUserExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Not Found', 'User not found!')
@@ -38,13 +38,13 @@ const loginUser = async (payload: TLoginUser) => {
   }
 
   const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: '15d',
+    expiresIn: '365d',
   })
 
   return {
     user: {
       _id: isUserExists?._id,
-      uername: isUserExists?.username,
+      name: isUserExists?.name,
       email: isUserExists?.email,
       role: isUserExists?.role,
     },

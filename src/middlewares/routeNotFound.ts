@@ -6,7 +6,7 @@ const routeNotFound = (req: Request, res: Response, next: NextFunction) => {
   return res.status(httpStatus.NOT_FOUND).json({
     success: false,
     message: 'Api not found',
-    errorMessage: '',
+    errorMessage: `The route ${req.originalUrl} does not exist on this server.`,
     errorDetails: '',
     stack: '',
   })

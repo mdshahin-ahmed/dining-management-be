@@ -9,10 +9,25 @@ const createUserIntoDB = async (payload: IUser) => {
     Number(config.bcrypt_salt_rounds),
   )
 
-  const result = await User.create(payload)
+  const result = await User.create({ ...payload, role: 'user' })
 
   return {
-    username: result.username,
+    username: result.name,
+    email: result.email,
+    role: result.role,
+    _id: result._id,
+  }
+}
+const createAdminIntoDB = async (payload: IUser) => {
+  payload.password = await bcrypt.hash(
+    payload.password,
+    Number(config.bcrypt_salt_rounds),
+  )
+
+  const result = await User.create({ ...payload, role: 'admin' })
+
+  return {
+    username: result.name,
     email: result.email,
     role: result.role,
     _id: result._id,
@@ -21,4 +36,5 @@ const createUserIntoDB = async (payload: IUser) => {
 
 export const userServices = {
   createUserIntoDB,
+  createAdminIntoDB,
 }

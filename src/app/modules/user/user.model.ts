@@ -7,11 +7,32 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-
-    // role: {
-    //   type: String,
-    //   enum: ['user', 'admin'],
-    // },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    mobile: {
+      type: String,
+      required: true,
+    },
+    hostel: {
+      type: String,
+      required: true,
+    },
+    room: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: 0,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+    },
   },
   {
     timestamps: true,
