@@ -9,7 +9,17 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     success: true,
     statusCode: 200,
-    message: 'User login successful',
+    message: 'User login successfully!',
+    data: result,
+  })
+})
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const result = await authServices.getMe(req.user)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'User retrieved successfully!',
     data: result,
   })
 })
@@ -27,5 +37,6 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
 
 export const authControllers = {
   loginUser,
+  getMe,
   changePassword,
 }

@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
 import moment from 'moment'
+import JwtPayloadInterface from '../../interface/jwtPayload'
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -49,6 +50,18 @@ const loginUser = async (payload: TLoginUser) => {
       role: isUserExists?.role,
     },
     token: accessToken,
+  }
+}
+const getMe = async (payload: JwtPayloadInterface) => {
+  // checking if the user is exist
+  const isUserExists = await User.findOne({
+    email: payload?.email,
+  })
+  if (!isUserExists) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Not Found', 'User not found!')
+  }
+  return {
+    isUserExists,
   }
 }
 
@@ -156,5 +169,6 @@ const changePassword = async (
 
 export const authServices = {
   loginUser,
+  getMe,
   changePassword,
 }
