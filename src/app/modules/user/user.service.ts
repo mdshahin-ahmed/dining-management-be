@@ -1,7 +1,10 @@
+import bcrypt from 'bcrypt'
+import httpStatus from 'http-status'
+import { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
+import AppError from '../../errors/app.error'
 import { IUser } from './user.interface'
 import { User } from './user.model'
-import bcrypt from 'bcrypt'
 
 const createUserIntoDB = async (payload: IUser) => {
   payload.password = await bcrypt.hash(
@@ -34,7 +37,23 @@ const createAdminIntoDB = async (payload: IUser) => {
   }
 }
 
+const getMe = async (payload: JwtPayload) => {
+  // checking if the user is exist
+  const isUserExists = await User.findOne({
+    email: payload?.email,
+  })
+  if (!isUserExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'User not found',
+      'User not found!',
+    )
+  }
+  return isUserExists
+}
+
 export const userServices = {
   createUserIntoDB,
   createAdminIntoDB,
+  getMe,
 }

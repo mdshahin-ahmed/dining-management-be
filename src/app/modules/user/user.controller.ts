@@ -22,7 +22,18 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const result = await userServices.getMe(req.user)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'User retrieved successfully!',
+    data: result,
+  })
+})
+
 export const userControllers = {
   createUser,
   createAdmin,
+  getMe,
 }
