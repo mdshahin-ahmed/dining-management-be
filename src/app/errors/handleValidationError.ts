@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const handleValidationError = (err: mongoose.Error.ValidationError) => {
   return {
-    message: 'Validation Error mon',
+    message: 'Please Provide Valid Information',
     errorMessage: err.message,
     errorDetails: err,
   }

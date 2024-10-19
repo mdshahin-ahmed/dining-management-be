@@ -24,7 +24,7 @@ const handleJoiError = (err: Joi.ValidationError) => {
 
   return {
     statusCode: 400,
-    message: 'Validation Error Joi',
+    message: 'Please Provide Valid Information',
     errorMessage: formattedErrors,
     errorDetails: err,
   }
