@@ -7,6 +7,7 @@ export interface IUser {
   hostel: string
   room: string
   password: string
+  balance: number
   role: 'user' | 'admin'
 }
 

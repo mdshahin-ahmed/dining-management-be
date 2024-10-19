@@ -29,6 +29,11 @@ const userSchema = new Schema<IUser>(
       required: true,
       select: 0,
     },
+    balance: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     role: {
       type: String,
       enum: ['user', 'admin'],
