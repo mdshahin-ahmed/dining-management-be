@@ -27,7 +27,8 @@ const createUserIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 
     });
 }));
 const getMealsFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield meal_service_1.mealServices.getMealsFromDB();
+    const type = req === null || req === void 0 ? void 0 : req.query;
+    const result = yield meal_service_1.mealServices.getMealsFromDB(type);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: 200,

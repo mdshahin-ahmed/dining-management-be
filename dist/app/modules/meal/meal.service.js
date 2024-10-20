@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mealServices = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const http_status_1 = __importDefault(require("http-status"));
 const app_error_1 = __importDefault(require("../../errors/app.error"));
 const meal_model_1 = require("./meal.model");
@@ -20,8 +21,9 @@ const createMealIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
     const result = yield meal_model_1.Meal.create(payload);
     return result;
 });
-const getMealsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield meal_model_1.Meal.find();
+const getMealsFromDB = (type) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = type ? type : {};
+    const result = yield meal_model_1.Meal.find(query);
     return result;
 });
 const getSingleMealFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
