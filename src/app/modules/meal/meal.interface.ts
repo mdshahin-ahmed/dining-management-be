@@ -1,7 +1,7 @@
 export interface IMeal {
   name: string
-  type: 'break_fast' | 'lunch' | 'dinner'
+  type: 'breakfast' | 'lunch' | 'dinner'
   price: number
-  image: string
+  // image: string
   description: string
 }

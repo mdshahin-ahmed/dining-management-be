@@ -12,11 +12,11 @@ const createMealValidationSchema = Joi.object({
     }),
 
     type: Joi.string()
-      .valid('break_fast', 'lunch', 'dinner')
+      .valid('breakfast', 'lunch', 'dinner')
       .required()
       .messages({
         'string.base': 'Meal type must be a text.',
-        'any.only': 'Meal type must be one of break_fast, lunch, or dinner.',
+        'any.only': 'Meal type must be one of breakfast, lunch, or dinner.',
         'any.required': 'Meal type is required.',
       }),
 
@@ -27,14 +27,14 @@ const createMealValidationSchema = Joi.object({
       'any.required': 'Price is required.',
     }),
 
-    image: Joi.string().uri().required().messages({
-      'string.base': 'Image must be a valid URL.',
-      'string.uri': 'Image must be a valid URL.',
-      'string.empty': 'Image URL is required.',
-      'any.required': 'Image is required.',
-    }),
+    // image: Joi.string().uri().required().messages({
+    //   'string.base': 'Image must be a valid URL.',
+    //   'string.uri': 'Image must be a valid URL.',
+    //   'string.empty': 'Image URL is required.',
+    //   'any.required': 'Image is required.',
+    // }),
 
-    description: Joi.string().min(10).max(500).required().messages({
+    description: Joi.string().min(5).max(500).required().messages({
       'string.base': 'Description must be a text.',
       'string.empty': 'Description is required.',
       'string.min': 'Description must be at least 10 characters long.',

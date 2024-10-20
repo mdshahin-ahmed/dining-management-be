@@ -16,7 +16,7 @@ const getMealsFromDB = catchAsync(async (req: Request, res: Response) => {
   const result = await mealServices.getMealsFromDB()
   sendResponse(res, {
     success: true,
-    statusCode: 201,
+    statusCode: 200,
     message: 'Meals retrieved successfully!',
     data: result,
   })
