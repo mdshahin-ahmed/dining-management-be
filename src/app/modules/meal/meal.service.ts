@@ -7,8 +7,9 @@ const createMealIntoDB = async (payload: IMeal) => {
   const result = await Meal.create(payload)
   return result
 }
-const getMealsFromDB = async () => {
-  const result = await Meal.find()
+const getMealsFromDB = async (type?: { type: string }) => {
+  const query = type ? type : {}
+  const result = await Meal.find(query)
   return result
 }
 const getSingleMealFromDB = async (id: string) => {

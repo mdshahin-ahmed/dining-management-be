@@ -14,7 +14,8 @@ const createUserIntoDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 const getMealsFromDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await mealServices.getMealsFromDB()
+  const type = req?.query
+  const result = await mealServices.getMealsFromDB(type)
   sendResponse(res, {
     success: true,
     statusCode: 200,
