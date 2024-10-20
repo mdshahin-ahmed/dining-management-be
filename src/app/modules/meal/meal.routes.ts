@@ -13,5 +13,13 @@ router.post(
   mealControllers.createUserIntoDB,
 )
 router.get('/', auth(ROLE.admin), mealControllers.getMealsFromDB)
+router.get('/:id', auth(ROLE.admin), mealControllers.getSingleMealFromDB)
+router.put(
+  '/:id',
+  auth(ROLE.admin),
+  validateData(mealValidations.createMealValidationSchema),
+  mealControllers.updateMealIntoDB,
+)
+router.delete('/:id', auth(ROLE.admin), mealControllers.deleteMealFromDB)
 
 export const mealRoutes = router
