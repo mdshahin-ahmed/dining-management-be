@@ -1,0 +1,19 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.mealRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const auth_1 = __importDefault(require("../../../middlewares/auth"));
+const user_constant_1 = require("../user/user.constant");
+const meal_controller_1 = require("./meal.controller");
+const validateData_1 = __importDefault(require("../../../middlewares/validateData"));
+const meal_validation_1 = require("./meal.validation");
+const router = express_1.default.Router();
+router.post('/', (0, auth_1.default)(user_constant_1.ROLE.admin), (0, validateData_1.default)(meal_validation_1.mealValidations.createMealValidationSchema), meal_controller_1.mealControllers.createUserIntoDB);
+router.get('/', (0, auth_1.default)(user_constant_1.ROLE.admin), meal_controller_1.mealControllers.getMealsFromDB);
+router.get('/:id', (0, auth_1.default)(user_constant_1.ROLE.admin), meal_controller_1.mealControllers.getSingleMealFromDB);
+router.put('/:id', (0, auth_1.default)(user_constant_1.ROLE.admin), (0, validateData_1.default)(meal_validation_1.mealValidations.createMealValidationSchema), meal_controller_1.mealControllers.updateMealIntoDB);
+router.delete('/:id', (0, auth_1.default)(user_constant_1.ROLE.admin), meal_controller_1.mealControllers.deleteMealFromDB);
+exports.mealRoutes = router;
