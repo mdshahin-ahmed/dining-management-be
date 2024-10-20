@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status'
 import AppError from '../../errors/app.error'
 import { IMeal } from './meal.interface'
@@ -7,7 +8,7 @@ const createMealIntoDB = async (payload: IMeal) => {
   const result = await Meal.create(payload)
   return result
 }
-const getMealsFromDB = async (type?: { type: string }) => {
+const getMealsFromDB = async (type?: any) => {
   const query = type ? type : {}
   const result = await Meal.find(query)
   return result
