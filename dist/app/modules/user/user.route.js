@@ -10,4 +10,5 @@ const user_constant_1 = require("../user/user.constant");
 const user_controller_1 = require("./user.controller");
 const router = express_1.default.Router();
 router.get('/me', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), user_controller_1.userControllers.getMe);
+router.get('/all', (0, auth_1.default)(user_constant_1.ROLE.admin), user_controller_1.userControllers.getUsers);
 exports.userRouter = router;

@@ -48,8 +48,14 @@ const getMe = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return isUserExists;
 });
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    // checking if the user is exist
+    const result = yield user_model_1.User.find();
+    return result;
+});
 exports.userServices = {
     createUserIntoDB,
     createAdminIntoDB,
     getMe,
+    getUsers,
 };
