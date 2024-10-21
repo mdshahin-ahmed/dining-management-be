@@ -51,9 +51,16 @@ const getMe = async (payload: JwtPayload) => {
   }
   return isUserExists
 }
+const getUsers = async () => {
+  // checking if the user is exist
+  const result = await User.find()
+
+  return result
+}
 
 export const userServices = {
   createUserIntoDB,
   createAdminIntoDB,
   getMe,
+  getUsers,
 }

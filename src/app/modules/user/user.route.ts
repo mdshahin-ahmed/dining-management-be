@@ -5,5 +5,6 @@ import { userControllers } from './user.controller'
 const router = express.Router()
 
 router.get('/me', auth(ROLE.admin, ROLE.user), userControllers.getMe)
+router.get('/all', auth(ROLE.admin), userControllers.getUsers)
 
 export const userRouter = router
