@@ -27,7 +27,7 @@ const createAdminIntoDB = async (payload: IUser) => {
     Number(config.bcrypt_salt_rounds),
   )
 
-  const result = await User.create({ ...payload, role: 'admin' })
+  const result = await User.create(payload)
 
   return {
     username: result.name,

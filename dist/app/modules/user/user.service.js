@@ -30,7 +30,7 @@ const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function
 });
 const createAdminIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     payload.password = yield bcrypt_1.default.hash(payload.password, Number(config_1.default.bcrypt_salt_rounds));
-    const result = yield user_model_1.User.create(Object.assign(Object.assign({}, payload), { role: 'admin' }));
+    const result = yield user_model_1.User.create(payload);
     return {
         username: result.name,
         email: result.email,
