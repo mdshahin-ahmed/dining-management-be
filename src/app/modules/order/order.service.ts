@@ -85,7 +85,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
 }
 
 const getOrdersFromDB = async () => {
-  const result = await Order.find()
+  const result = await Order.find({}).populate('user', 'name')
   return result
 }
 
