@@ -15,6 +15,7 @@ const userSchema = new mongoose_1.Schema({
     mobile: {
         type: String,
         required: true,
+        unique: true,
     },
     hostel: {
         type: String,

@@ -15,6 +15,7 @@ const userSchema = new Schema<IUser>(
     mobile: {
       type: String,
       required: true,
+      unique: true,
     },
     hostel: {
       type: String,
