@@ -67,7 +67,7 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 const getOrdersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield order_model_1.Order.find();
+    const result = yield order_model_1.Order.find({}).populate('user', 'name');
     return result;
 });
 exports.orderServices = { createOrderIntoDB, getOrdersFromDB };
