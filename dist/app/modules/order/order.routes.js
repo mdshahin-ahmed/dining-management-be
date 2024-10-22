@@ -10,4 +10,5 @@ const user_constant_1 = require("../user/user.constant");
 const order_controller_1 = require("./order.controller");
 const router = express_1.default.Router();
 router.post('/', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), order_controller_1.orderControllers.createOrderIntoDB);
+router.get('/', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), order_controller_1.orderControllers.getOrdersFromDB);
 exports.orderRoutes = router;

@@ -21,7 +21,6 @@ const createOrderIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void
     const user = req === null || req === void 0 ? void 0 : req.user;
     const id = (_a = req === null || req === void 0 ? void 0 : req.query) === null || _a === void 0 ? void 0 : _a.id;
     const result = yield order_service_1.orderServices.createOrderIntoDB(user, id);
-    console.log('From controller', result);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: 201,
@@ -29,4 +28,13 @@ const createOrderIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void
         data: result,
     });
 }));
-exports.orderControllers = { createOrderIntoDB };
+const getOrdersFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield order_service_1.orderServices.getOrdersFromDB();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: 200,
+        message: 'Order retrieved successfully',
+        data: result,
+    });
+}));
+exports.orderControllers = { createOrderIntoDB, getOrdersFromDB };

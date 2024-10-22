@@ -77,4 +77,9 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
   }
 }
 
-export const orderServices = { createOrderIntoDB }
+const getOrdersFromDB = async () => {
+  const result = await Order.find()
+  return result
+}
+
+export const orderServices = { createOrderIntoDB, getOrdersFromDB }

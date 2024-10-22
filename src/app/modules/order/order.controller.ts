@@ -7,7 +7,6 @@ const createOrderIntoDB = catchAsync(async (req: Request, res: Response) => {
   const user = req?.user
   const id = req?.query?.id as string
   const result = await orderServices.createOrderIntoDB(user, id)
-  console.log('From controller', result)
 
   sendResponse(res, {
     success: true,
@@ -17,4 +16,15 @@ const createOrderIntoDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-export const orderControllers = { createOrderIntoDB }
+const getOrdersFromDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await orderServices.getOrdersFromDB()
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Order retrieved successfully',
+    data: result,
+  })
+})
+
+export const orderControllers = { createOrderIntoDB, getOrdersFromDB }

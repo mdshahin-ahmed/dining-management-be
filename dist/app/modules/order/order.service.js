@@ -63,4 +63,8 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
         session.endSession();
     }
 });
-exports.orderServices = { createOrderIntoDB };
+const getOrdersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield order_model_1.Order.find();
+    return result;
+});
+exports.orderServices = { createOrderIntoDB, getOrdersFromDB };

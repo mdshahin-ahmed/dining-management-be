@@ -9,5 +9,6 @@ router.post(
   auth(ROLE.admin, ROLE.user),
   orderControllers.createOrderIntoDB,
 )
+router.get('/', auth(ROLE.admin, ROLE.user), orderControllers.getOrdersFromDB)
 
 export const orderRoutes = router
