@@ -35,6 +35,13 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
       }
 
       // balance check
+      if (isMealExist?.price < 1) {
+        throw new AppError(
+          httpStatus.BAD_REQUEST,
+          'Price should be grater then 0',
+          'Price should be grater then 0',
+        )
+      }
       if (isUserExists?.balance < isMealExist?.price) {
         throw new AppError(
           httpStatus.BAD_REQUEST,

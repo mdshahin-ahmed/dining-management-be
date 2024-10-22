@@ -56,7 +56,7 @@ const globalErrorHandler = (err, req, res, next) => {
         message: defaultValues.message,
         errorMessage: defaultValues.errorMessage,
         errorDetails: defaultValues.errorDetails,
-        stack: (defaultValues.errorDetails && (err === null || err === void 0 ? void 0 : err.stack)) || null,
+        // stack: (defaultValues.errorDetails && err?.stack) || null,
     });
 };
 exports.default = globalErrorHandler;

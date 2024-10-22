@@ -36,6 +36,9 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
                 throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'Meal not found', 'Meal not found!');
             }
             // balance check
+            if ((isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price) < 1) {
+                throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'Price should be grater then 0', 'Price should be grater then 0');
+            }
             if ((isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) < (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price)) {
                 throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'You have no enough balance!', 'You have no enough balance!. Please Recharge');
             }

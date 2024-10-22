@@ -57,7 +57,7 @@ const globalErrorHandler = (
     message: defaultValues.message,
     errorMessage: defaultValues.errorMessage,
     errorDetails: defaultValues.errorDetails,
-    stack: (defaultValues.errorDetails && err?.stack) || null,
+    // stack: (defaultValues.errorDetails && err?.stack) || null,
   })
 }
 
