@@ -7,6 +7,8 @@ const createOrderIntoDB = catchAsync(async (req: Request, res: Response) => {
   const user = req?.user
   const id = req?.query?.id as string
   const result = await orderServices.createOrderIntoDB(user, id)
+  console.log('From controller', result)
+
   sendResponse(res, {
     success: true,
     statusCode: 201,

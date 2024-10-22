@@ -18,25 +18,49 @@ const http_status_1 = __importDefault(require("http-status"));
 const app_error_1 = __importDefault(require("../../errors/app.error"));
 const meal_model_1 = require("../meal/meal.model");
 const order_model_1 = require("./order.model");
+const mongoose_1 = require("mongoose");
 const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUserExists = yield user_model_1.User.findOne({
-        email: user === null || user === void 0 ? void 0 : user.email,
-    });
-    if (!isUserExists) {
-        throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'User not found', 'User not found!');
+    const session = yield (0, mongoose_1.startSession)();
+    try {
+        const result = yield session.withTransaction(() => __awaiter(void 0, void 0, void 0, function* () {
+            // check user exist
+            const isUserExists = yield user_model_1.User.findOne({
+                email: user === null || user === void 0 ? void 0 : user.email,
+            }).session(session);
+            if (!isUserExists) {
+                throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'User not found', 'User not found!');
+            }
+            // check meal exist
+            const isMealExist = yield meal_model_1.Meal.findById(id).session(session);
+            if (!isMealExist) {
+                throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'Meal not found', 'Meal not found!');
+            }
+            // balance check
+            if ((isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) < (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price)) {
+                throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'You have no enough balance!', 'You have no enough balance!. Please Recharge');
+            }
+            // Cut balance
+            yield user_model_1.User.findOneAndUpdate(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id, {
+                balance: (isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) - (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price),
+            }, { session, new: true });
+            // data
+            const data = {
+                user: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id,
+                name: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.name,
+                description: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.description,
+                price: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price,
+                type: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.type,
+            };
+            const orderResult = yield order_model_1.Order.create([data], { session });
+            return orderResult[0];
+        }));
+        return result;
     }
-    const isMealExist = yield meal_model_1.Meal.findById(id);
-    if (!isMealExist) {
-        throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'Meal not found', 'Meal not found!');
+    catch (error) {
+        throw new app_error_1.default(http_status_1.default.BAD_REQUEST, (error === null || error === void 0 ? void 0 : error.message) || 'Order Failed', (error === null || error === void 0 ? void 0 : error.errorMessage) || 'Order Failed');
     }
-    const data = {
-        user: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id,
-        name: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.name,
-        description: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.description,
-        price: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price,
-        type: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.type,
-    };
-    const result = yield order_model_1.Order.create(data);
-    return result;
+    finally {
+        session.endSession();
+    }
 });
 exports.orderServices = { createOrderIntoDB };

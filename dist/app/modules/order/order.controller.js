@@ -21,6 +21,7 @@ const createOrderIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void
     const user = req === null || req === void 0 ? void 0 : req.user;
     const id = (_a = req === null || req === void 0 ? void 0 : req.query) === null || _a === void 0 ? void 0 : _a.id;
     const result = yield order_service_1.orderServices.createOrderIntoDB(user, id);
+    console.log('From controller', result);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: 201,
