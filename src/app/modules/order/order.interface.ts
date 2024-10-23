@@ -6,4 +6,5 @@ export interface IOrder {
   description: string
   price: number
   type: string
+  status: 'pending' | 'approved' | 'canceled'
 }

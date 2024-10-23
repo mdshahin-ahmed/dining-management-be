@@ -27,4 +27,22 @@ const getOrdersFromDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-export const orderControllers = { createOrderIntoDB, getOrdersFromDB }
+const updateOrderStatus = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const status = req.body
+
+  const result = await orderServices.updateOrderStatus(id, status)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Order updated successfully',
+    data: result,
+  })
+})
+
+export const orderControllers = {
+  createOrderIntoDB,
+  getOrdersFromDB,
+  updateOrderStatus,
+}

@@ -88,5 +88,24 @@ const getOrdersFromDB = async () => {
   const result = await Order.find({}).populate('user', 'name')
   return result
 }
+const updateOrderStatus = async (id: string, status: { status: string }) => {
+  const isMealExist = await Order.findById(id)
+  if (!isMealExist) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Order not found',
+      'Order not found!',
+    )
+  }
 
-export const orderServices = { createOrderIntoDB, getOrdersFromDB }
+  const result = await Order.findByIdAndUpdate(id, status, {
+    new: true,
+  })
+  return result
+}
+
+export const orderServices = {
+  createOrderIntoDB,
+  getOrdersFromDB,
+  updateOrderStatus,
+}
