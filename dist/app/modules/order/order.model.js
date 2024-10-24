@@ -11,6 +11,11 @@ const orderSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    uId: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     description: {
         type: String,
         required: true,

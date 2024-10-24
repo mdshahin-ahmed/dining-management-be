@@ -48,6 +48,12 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
             yield user_model_1.User.findOneAndUpdate(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id, {
                 balance: (isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) - (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price),
             }, { session, new: true });
+            // Find the last order to generate uId
+            const lastOrder = yield order_model_1.Order.findOne()
+                .sort({ uId: -1 })
+                .select('uId')
+                .session(session);
+            const newUId = lastOrder ? Number(lastOrder.uId) + 1 : 1;
             // data
             const data = {
                 user: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id,
@@ -55,6 +61,7 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
                 description: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.description,
                 price: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price,
                 type: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.type,
+                uId: newUId,
             };
             const orderResult = yield order_model_1.Order.create([data], { session });
             return orderResult[0];
