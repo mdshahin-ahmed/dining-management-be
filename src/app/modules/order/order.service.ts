@@ -62,6 +62,14 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
         { session, new: true },
       )
 
+      // Find the last order to generate uId
+      const lastOrder = await Order.findOne()
+        .sort({ uId: -1 })
+        .select('uId')
+        .session(session)
+
+      const newUId = lastOrder ? Number(lastOrder.uId) + 1 : 1
+
       // data
       const data = {
         user: isUserExists?._id,
@@ -69,6 +77,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
         description: isMealExist?.description,
         price: isMealExist?.price,
         type: isMealExist?.type,
+        uId: newUId,
       }
 
       const orderResult = await Order.create([data], { session })

@@ -1,7 +1,1 @@
-export const ordersSearchableFields = [
-  'name',
-  'email',
-  'mobile',
-  'hostel',
-  'room',
-]
+export const ordersSearchableFields = ['uId', 'name']
