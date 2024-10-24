@@ -29,7 +29,11 @@ class QueryBuilder<T> {
     // filtering
     const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields']
     excludeFields.forEach((el) => delete queryObj[el])
-
+    if (queryObj.status && typeof queryObj.status === 'string') {
+      const statusArray = queryObj.status.split(',')
+      // Update queryObj to use $in for the status
+      queryObj.status = { $in: statusArray }
+    }
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>)
 
     return this

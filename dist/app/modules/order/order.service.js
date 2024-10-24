@@ -78,7 +78,7 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
 const getOrdersFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
     // const result = await Order.find({}).populate('user', 'name')
     // return result
-    const ordersQuery = new QueryBuilder_1.default(order_model_1.Order.find().populate('user'), query)
+    const ordersQuery = new QueryBuilder_1.default(order_model_1.Order.find().populate('user', 'name'), query)
         .search(order_constant_1.ordersSearchableFields)
         .filter()
         .sort()
