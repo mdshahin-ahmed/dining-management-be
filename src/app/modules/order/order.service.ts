@@ -6,6 +6,8 @@ import AppError from '../../errors/app.error'
 import { Meal } from '../meal/meal.model'
 import { Order } from './order.model'
 import { startSession } from 'mongoose'
+import QueryBuilder from '../../builder/QueryBuilder'
+import { ordersSearchableFields } from './order.constant'
 
 const createOrderIntoDB = async (user: JwtPayload, id: string) => {
   const session = await startSession()
@@ -84,9 +86,23 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
   }
 }
 
-const getOrdersFromDB = async () => {
-  const result = await Order.find({}).populate('user', 'name')
-  return result
+const getOrdersFromDB = async (query: Record<string, unknown>) => {
+  // const result = await Order.find({}).populate('user', 'name')
+  // return result
+  const ordersQuery = new QueryBuilder(Order.find().populate('user'), query)
+    .search(ordersSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+
+  const meta = await ordersQuery.countTotal()
+  const result = await ordersQuery.modelQuery
+
+  return {
+    meta,
+    result,
+  }
 }
 const updateOrderStatus = async (id: string, status: { status: string }) => {
   const isMealExist = await Order.findById(id)

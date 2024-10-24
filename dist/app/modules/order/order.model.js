@@ -23,6 +23,12 @@ const orderSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'canceled'], // Only allow these values
+        default: 'pending', // Default value
+        required: true,
+    },
 }, {
     timestamps: true,
 });

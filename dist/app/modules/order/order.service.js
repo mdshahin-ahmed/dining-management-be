@@ -19,6 +19,8 @@ const app_error_1 = __importDefault(require("../../errors/app.error"));
 const meal_model_1 = require("../meal/meal.model");
 const order_model_1 = require("./order.model");
 const mongoose_1 = require("mongoose");
+const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const order_constant_1 = require("./order.constant");
 const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, function* () {
     const session = yield (0, mongoose_1.startSession)();
     try {
@@ -66,8 +68,34 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
         session.endSession();
     }
 });
-const getOrdersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield order_model_1.Order.find({}).populate('user', 'name');
+const getOrdersFromDB = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    // const result = await Order.find({}).populate('user', 'name')
+    // return result
+    const ordersQuery = new QueryBuilder_1.default(order_model_1.Order.find().populate('user'), query)
+        .search(order_constant_1.ordersSearchableFields)
+        .filter()
+        .sort()
+        .paginate()
+        .fields();
+    const meta = yield ordersQuery.countTotal();
+    const result = yield ordersQuery.modelQuery;
+    return {
+        meta,
+        result,
+    };
+});
+const updateOrderStatus = (id, status) => __awaiter(void 0, void 0, void 0, function* () {
+    const isMealExist = yield order_model_1.Order.findById(id);
+    if (!isMealExist) {
+        throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'Order not found', 'Order not found!');
+    }
+    const result = yield order_model_1.Order.findByIdAndUpdate(id, status, {
+        new: true,
+    });
     return result;
 });
-exports.orderServices = { createOrderIntoDB, getOrdersFromDB };
+exports.orderServices = {
+    createOrderIntoDB,
+    getOrdersFromDB,
+    updateOrderStatus,
+};
