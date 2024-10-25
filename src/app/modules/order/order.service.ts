@@ -64,7 +64,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
 
       // Find the last order to generate uId
       const lastOrder = await Order.findOne()
-        .sort({ uId: -1 })
+        .sort({ createdAt: -1 })
         .select('uId')
         .session(session)
 
