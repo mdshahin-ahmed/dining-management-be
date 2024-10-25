@@ -50,7 +50,7 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
             }, { session, new: true });
             // Find the last order to generate uId
             const lastOrder = yield order_model_1.Order.findOne()
-                .sort({ uId: -1 })
+                .sort({ createdAt: -1 })
                 .select('uId')
                 .session(session);
             const newUId = lastOrder ? Number(lastOrder.uId) + 1 : 1;
