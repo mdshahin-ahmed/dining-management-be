@@ -12,7 +12,7 @@ router.post(
   validateData(mealValidations.createMealValidationSchema),
   mealControllers.createUserIntoDB,
 )
-router.get('/', auth(ROLE.admin), mealControllers.getMealsFromDB)
+router.get('/', auth(ROLE.admin, ROLE.user), mealControllers.getMealsFromDB)
 router.get('/:id', auth(ROLE.admin), mealControllers.getSingleMealFromDB)
 router.put(
   '/:id',

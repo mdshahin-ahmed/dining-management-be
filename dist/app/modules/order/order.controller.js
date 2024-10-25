@@ -30,7 +30,8 @@ const createOrderIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void
 }));
 const getOrdersFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query;
-    const result = yield order_service_1.orderServices.getOrdersFromDB(query);
+    const user = req.user;
+    const result = yield order_service_1.orderServices.getOrdersFromDB(query, user);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: 200,

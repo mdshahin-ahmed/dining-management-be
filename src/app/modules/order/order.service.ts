@@ -95,12 +95,16 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
   }
 }
 
-const getOrdersFromDB = async (query: Record<string, unknown>) => {
+const getOrdersFromDB = async (
+  query: Record<string, unknown>,
+  user: JwtPayload,
+) => {
   // const result = await Order.find({}).populate('user', 'name')
   // return result
   const ordersQuery = new QueryBuilder(
     Order.find().populate('user', 'name'),
     query,
+    user,
   )
     .search(ordersSearchableFields)
     .filter()

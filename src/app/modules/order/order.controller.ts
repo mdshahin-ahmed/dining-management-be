@@ -18,7 +18,8 @@ const createOrderIntoDB = catchAsync(async (req: Request, res: Response) => {
 
 const getOrdersFromDB = catchAsync(async (req: Request, res: Response) => {
   const query = req.query
-  const result = await orderServices.getOrdersFromDB(query)
+  const user = req.user
+  const result = await orderServices.getOrdersFromDB(query, user)
 
   sendResponse(res, {
     success: true,

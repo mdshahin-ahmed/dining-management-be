@@ -10,9 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 class QueryBuilder {
-    constructor(modelQuery, query) {
+    constructor(modelQuery, query, user) {
         this.modelQuery = modelQuery;
         this.query = query;
+        this.user = user;
     }
     search(searchableFields) {
         var _a;
@@ -28,6 +29,7 @@ class QueryBuilder {
     }
     filter() {
         const queryObj = Object.assign({}, this.query);
+        const user = this.user;
         // filtering
         const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
         excludeFields.forEach((el) => delete queryObj[el]);
@@ -35,6 +37,10 @@ class QueryBuilder {
             const statusArray = queryObj.status.split(',');
             // Update queryObj to use $in for the status
             queryObj.status = { $in: statusArray };
+        }
+        if ((user === null || user === void 0 ? void 0 : user.role) === 'user') {
+            queryObj.user = user === null || user === void 0 ? void 0 : user._id;
+            // queryObj.status = { $in: ['approved', 'pending'] }
         }
         this.modelQuery = this.modelQuery.find(queryObj);
         return this;
