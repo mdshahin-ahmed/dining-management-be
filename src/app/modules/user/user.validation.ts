@@ -46,7 +46,22 @@ const createAdminValidationSchema = Joi.object({
   }),
 })
 
+const addBalanceSchema = Joi.object({
+  body: Joi.object({
+    id: Joi.string().required(),
+    balance: Joi.number()
+      .positive() // Balance should be a positive number
+      .required()
+      .messages({
+        'number.base': 'Balance must be a number',
+        'number.positive': 'Balance must be a positive number',
+        'any.required': 'Balance is required',
+      }),
+  }),
+})
+
 export const userValidations = {
   createUserValidationSchema,
   createAdminValidationSchema,
+  addBalanceSchema,
 }

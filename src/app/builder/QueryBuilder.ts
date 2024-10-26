@@ -9,7 +9,7 @@ class QueryBuilder<T> {
   constructor(
     modelQuery: Query<T[], T>,
     query: Record<string, unknown>,
-    user: JwtPayload,
+    user?: JwtPayload,
   ) {
     this.modelQuery = modelQuery
     this.query = query

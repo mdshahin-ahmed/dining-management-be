@@ -18,6 +18,8 @@ const http_status_1 = __importDefault(require("http-status"));
 const config_1 = __importDefault(require("../../config"));
 const app_error_1 = __importDefault(require("../../errors/app.error"));
 const user_model_1 = require("./user.model");
+const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const user_constant_1 = require("./user.constant");
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     payload.password = yield bcrypt_1.default.hash(payload.password, Number(config_1.default.bcrypt_salt_rounds));
     const result = yield user_model_1.User.create(Object.assign(Object.assign({}, payload), { role: 'user' }));
@@ -48,9 +50,29 @@ const getMe = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return isUserExists;
 });
-const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+const getUsers = (query) => __awaiter(void 0, void 0, void 0, function* () {
     // checking if the user is exist
-    const result = yield user_model_1.User.find();
+    const usersQuery = new QueryBuilder_1.default(user_model_1.User.find(), query)
+        .search(user_constant_1.userSearchableFields)
+        .filter()
+        .sort()
+        .paginate()
+        .fields();
+    const meta = yield usersQuery.countTotal();
+    const result = yield usersQuery.modelQuery;
+    return {
+        meta,
+        result,
+    };
+});
+const addBalance = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const isUserExists = yield user_model_1.User.findById(payload === null || payload === void 0 ? void 0 : payload.id);
+    if (!isUserExists) {
+        throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'User not found', 'User not found!');
+    }
+    const result = yield user_model_1.User.findByIdAndUpdate(payload === null || payload === void 0 ? void 0 : payload.id, {
+        balance: Number(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) + Number(payload.balance),
+    }, { new: true });
     return result;
 });
 exports.userServices = {
@@ -58,4 +80,5 @@ exports.userServices = {
     createAdminIntoDB,
     getMe,
     getUsers,
+    addBalance,
 };

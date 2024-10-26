@@ -32,11 +32,21 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
   })
 })
 const getUsers = catchAsync(async (req: Request, res: Response) => {
-  const result = await userServices.getUsers()
+  const result = await userServices.getUsers(req?.query)
   sendResponse(res, {
     success: true,
     statusCode: 200,
     message: 'Users retrieved successfully!',
+    data: result,
+  })
+})
+
+const addBalance = catchAsync(async (req: Request, res: Response) => {
+  const result = await userServices.addBalance(req.body)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Balance added successfully!',
     data: result,
   })
 })
@@ -46,4 +56,5 @@ export const userControllers = {
   createAdmin,
   getMe,
   getUsers,
+  addBalance,
 }

@@ -5,6 +5,8 @@ import config from '../../config'
 import AppError from '../../errors/app.error'
 import { IUser } from './user.interface'
 import { User } from './user.model'
+import QueryBuilder from '../../builder/QueryBuilder'
+import { userSearchableFields } from './user.constant'
 
 const createUserIntoDB = async (payload: IUser) => {
   payload.password = await bcrypt.hash(
@@ -51,10 +53,39 @@ const getMe = async (payload: JwtPayload) => {
   }
   return isUserExists
 }
-const getUsers = async () => {
+const getUsers = async (query: Record<string, unknown>) => {
   // checking if the user is exist
-  const result = await User.find()
+  const usersQuery = new QueryBuilder(User.find(), query)
+    .search(userSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
 
+  const meta = await usersQuery.countTotal()
+  const result = await usersQuery.modelQuery
+
+  return {
+    meta,
+    result,
+  }
+}
+const addBalance = async (payload: { id: string; balance: number }) => {
+  const isUserExists = await User.findById(payload?.id)
+  if (!isUserExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'User not found',
+      'User not found!',
+    )
+  }
+  const result = await User.findByIdAndUpdate(
+    payload?.id,
+    {
+      balance: Number(isUserExists?.balance) + Number(payload.balance),
+    },
+    { new: true },
+  )
   return result
 }
 
@@ -63,4 +94,5 @@ export const userServices = {
   createAdminIntoDB,
   getMe,
   getUsers,
+  addBalance,
 }

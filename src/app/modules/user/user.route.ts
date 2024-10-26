@@ -2,9 +2,17 @@ import express from 'express'
 import auth from '../../../middlewares/auth'
 import { ROLE } from '../user/user.constant'
 import { userControllers } from './user.controller'
+import validateData from '../../../middlewares/validateData'
+import { userValidations } from './user.validation'
 const router = express.Router()
 
 router.get('/me', auth(ROLE.admin, ROLE.user), userControllers.getMe)
 router.get('/all', auth(ROLE.admin), userControllers.getUsers)
+router.patch(
+  '/add-balance',
+  auth(ROLE.admin),
+  validateData(userValidations.addBalanceSchema),
+  userControllers.addBalance,
+)
 
 export const userRouter = router

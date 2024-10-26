@@ -44,11 +44,20 @@ const getMe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, 
     });
 }));
 const getUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_service_1.userServices.getUsers();
+    const result = yield user_service_1.userServices.getUsers(req === null || req === void 0 ? void 0 : req.query);
     (0, sendResponse_1.default)(res, {
         success: true,
         statusCode: 200,
         message: 'Users retrieved successfully!',
+        data: result,
+    });
+}));
+const addBalance = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_service_1.userServices.addBalance(req.body);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: 200,
+        message: 'Balance added successfully!',
         data: result,
     });
 }));
@@ -57,4 +66,5 @@ exports.userControllers = {
     createAdmin,
     getMe,
     getUsers,
+    addBalance,
 };
