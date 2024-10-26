@@ -5,4 +5,4 @@ exports.ROLE = {
     admin: 'admin',
     user: 'user',
 };
-exports.userSearchableFields = ['name,email,mobile'];
+exports.userSearchableFields = ['name', 'email', 'mobile', 'room'];

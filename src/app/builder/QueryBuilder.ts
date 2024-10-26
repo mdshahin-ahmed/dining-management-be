@@ -46,6 +46,7 @@ class QueryBuilder<T> {
       queryObj.user = user?._id
       // queryObj.status = { $in: ['approved', 'pending'] }
     }
+
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>)
 
     return this

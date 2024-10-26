@@ -3,4 +3,4 @@ export const ROLE = {
   user: 'user',
 } as const
 
-export const userSearchableFields = ['name,email,mobile']
+export const userSearchableFields = ['name', 'email', 'mobile', 'room']
