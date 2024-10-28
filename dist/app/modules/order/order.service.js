@@ -69,6 +69,7 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
                 price: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price,
                 type: isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.type,
                 uId: newUId,
+                userId: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.userId,
             };
             const orderResult = yield order_model_1.Order.create([data], { session });
             return orderResult[0];

@@ -98,6 +98,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
         price: isMealExist?.price,
         type: isMealExist?.type,
         uId: newUId,
+        userId: isUserExists?.userId,
       }
 
       const orderResult = await Order.create([data], { session })

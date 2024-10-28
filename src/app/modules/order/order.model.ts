@@ -24,6 +24,10 @@ const orderSchema = new Schema<IOrder>(
       type: Number,
       required: true,
     },
+    userId: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       required: true,

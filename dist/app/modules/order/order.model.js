@@ -24,6 +24,10 @@ const orderSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
+    userId: {
+        type: String,
+        required: true,
+    },
     type: {
         type: String,
         required: true,
