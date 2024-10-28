@@ -4,7 +4,7 @@ import sendResponse from '../../utils/sendResponse'
 import { mealServices } from './meal.service'
 import httpStatus from 'http-status'
 
-const createUserIntoDB = catchAsync(async (req: Request, res: Response) => {
+const createMealIntoDB = catchAsync(async (req: Request, res: Response) => {
   const result = await mealServices.createMealIntoDB(req.body)
   sendResponse(res, {
     success: true,
@@ -58,7 +58,7 @@ const deleteMealFromDB = catchAsync(async (req: Request, res: Response) => {
 })
 
 export const mealControllers = {
-  createUserIntoDB,
+  createMealIntoDB,
   getMealsFromDB,
   getSingleMealFromDB,
   updateMealIntoDB,

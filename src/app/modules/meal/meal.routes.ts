@@ -10,7 +10,7 @@ router.post(
   '/',
   auth(ROLE.admin),
   validateData(mealValidations.createMealValidationSchema),
-  mealControllers.createUserIntoDB,
+  mealControllers.createMealIntoDB,
 )
 router.get('/', auth(ROLE.admin), mealControllers.getMealsFromDB)
 router.get(

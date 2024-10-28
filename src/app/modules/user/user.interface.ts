@@ -8,6 +8,7 @@ export interface IUser {
   room: string
   password: string
   balance: number
+  userId: string
   role: 'user' | 'admin'
 }
 

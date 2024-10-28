@@ -1,11 +1,11 @@
 import express from 'express'
+import auth from '../../../middlewares/auth'
 import validateData from '../../../middlewares/validateData'
+import { ROLE } from '../user/user.constant'
 import { userControllers } from '../user/user.controller'
 import { userValidations } from '../user/user.validation'
 import { authControllers } from './auth.controller'
 import { authValidations } from './auth.validation'
-import auth from '../../../middlewares/auth'
-import { ROLE } from '../user/user.constant'
 const router = express.Router()
 
 router.post(
@@ -14,11 +14,11 @@ router.post(
   validateData(userValidations.createAdminValidationSchema),
   userControllers.createAdmin,
 )
-router.post(
-  '/signup',
-  validateData(userValidations.createUserValidationSchema),
-  userControllers.createUser,
-)
+// router.post(
+//   '/signup',
+//   validateData(userValidations.createUserValidationSchema),
+//   userControllers.createUser,
+// )
 
 router.post(
   '/login',
