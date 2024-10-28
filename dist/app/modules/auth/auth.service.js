@@ -36,6 +36,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         _id: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id,
         role: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.role,
         email: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.email,
+        userId: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.userId,
     };
     const accessToken = jsonwebtoken_1.default.sign(jwtPayload, config_1.default.jwt_access_secret, {
         expiresIn: '365d',

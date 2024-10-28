@@ -17,7 +17,7 @@ const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const meal_service_1 = require("./meal.service");
 const http_status_1 = __importDefault(require("http-status"));
-const createUserIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createMealIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield meal_service_1.mealServices.createMealIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
         success: true,
@@ -71,7 +71,7 @@ const deleteMealFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 
     });
 }));
 exports.mealControllers = {
-    createUserIntoDB,
+    createMealIntoDB,
     getMealsFromDB,
     getSingleMealFromDB,
     updateMealIntoDB,
