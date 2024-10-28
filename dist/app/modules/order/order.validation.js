@@ -7,7 +7,10 @@ exports.orderValidations = void 0;
 const joi_1 = __importDefault(require("joi"));
 const orderStatusValidationSchema = joi_1.default.object({
     body: joi_1.default.object({
-        status: joi_1.default.string().valid('approved', 'canceled').required().messages({
+        status: joi_1.default.string()
+            .valid('approved', 'canceled', 'pending')
+            .required()
+            .messages({
             'any.only': 'Status must be one of pending, approved, or canceled',
             'any.required': 'Status is required',
         }),

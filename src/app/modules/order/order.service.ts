@@ -18,6 +18,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
       const isUserExists = await User.findOne({
         email: user?.email,
       }).session(session)
+
       if (!isUserExists) {
         throw new AppError(
           httpStatus.NOT_FOUND,
@@ -44,6 +45,15 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
           'Price should be grater then 0',
         )
       }
+
+      if (isMealExist?.stock < 1) {
+        throw new AppError(
+          httpStatus.BAD_REQUEST,
+          'Stock Out',
+          'No meal available',
+        )
+      }
+
       if (isUserExists?.balance < isMealExist?.price) {
         throw new AppError(
           httpStatus.BAD_REQUEST,
@@ -51,6 +61,16 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
           'You have no enough balance!. Please Recharge',
         )
       }
+
+      // Decrease quantity
+
+      await Meal.findByIdAndUpdate(
+        isMealExist?._id,
+        {
+          stock: isMealExist?.stock - 1,
+        },
+        { session, new: true },
+      )
 
       // Cut balance
 

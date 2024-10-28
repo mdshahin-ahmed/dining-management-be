@@ -27,6 +27,13 @@ const createMealValidationSchema = Joi.object({
       'any.required': 'Price is required.',
     }),
 
+    stock: Joi.number().positive().precision(3).required().messages({
+      'number.base': 'Stock must be a number.',
+      'number.positive': 'Stock must be a positive number.',
+      'number.precision': 'Stock can have at most 3 decimal places.',
+      'any.required': 'Stock is required.',
+    }),
+
     // image: Joi.string().uri().required().messages({
     //   'string.base': 'Image must be a valid URL.',
     //   'string.uri': 'Image must be a valid URL.',

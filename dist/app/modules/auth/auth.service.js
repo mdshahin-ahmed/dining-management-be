@@ -42,7 +42,11 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         expiresIn: '365d',
     });
     return {
-        isUserExists,
+        user: {
+            name: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.name,
+            email: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.email,
+            role: isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.role,
+        },
         token: accessToken,
     };
 });

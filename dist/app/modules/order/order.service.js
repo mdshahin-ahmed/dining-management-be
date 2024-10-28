@@ -41,9 +41,16 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
             if ((isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price) < 1) {
                 throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'Price should be grater then 0', 'Price should be grater then 0');
             }
+            if ((isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.stock) < 1) {
+                throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'Stock Out', 'No meal available');
+            }
             if ((isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) < (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price)) {
                 throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'You have no enough balance!', 'You have no enough balance!. Please Recharge');
             }
+            // Decrease quantity
+            yield meal_model_1.Meal.findByIdAndUpdate(isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist._id, {
+                stock: (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.stock) - 1,
+            }, { session, new: true });
             // Cut balance
             yield user_model_1.User.findOneAndUpdate(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id, {
                 balance: (isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) - (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price),

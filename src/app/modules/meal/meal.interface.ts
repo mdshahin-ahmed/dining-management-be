@@ -2,6 +2,6 @@ export interface IMeal {
   name: string
   type: 'breakfast' | 'lunch' | 'dinner'
   price: number
-  // image: string
+  stock: number
   description: string
 }

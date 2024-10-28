@@ -46,7 +46,11 @@ const loginUser = async (payload: TLoginUser) => {
   })
 
   return {
-    isUserExists,
+    user: {
+      name: isUserExists?.name,
+      email: isUserExists?.email,
+      role: isUserExists?.role,
+    },
     token: accessToken,
   }
 }
