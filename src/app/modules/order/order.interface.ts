@@ -8,5 +8,5 @@ export interface IOrder {
   price: number
   type: string
   userId: string
-  status: 'pending' | 'approved' | 'canceled'
+  status: 'pending' | 'delivered' | 'canceled'
 }

@@ -34,7 +34,7 @@ const orderSchema = new Schema<IOrder>(
     },
     status: {
       type: String,
-      enum: ['pending', 'approved', 'canceled'], // Only allow these values
+      enum: ['pending', 'delivered', 'canceled'], // Only allow these values
       default: 'pending', // Default value
       required: true,
     },

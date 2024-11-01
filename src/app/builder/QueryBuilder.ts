@@ -44,7 +44,7 @@ class QueryBuilder<T> {
     }
     if (user?.role === 'user') {
       queryObj.user = user?._id
-      // queryObj.status = { $in: ['approved', 'pending'] }
+      // queryObj.status = { $in: ['delivered', 'pending'] }
     }
 
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>)
