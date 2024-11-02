@@ -12,6 +12,6 @@ const validateData_1 = __importDefault(require("../../../middlewares/validateDat
 const order_validation_1 = require("./order.validation");
 const router = express_1.default.Router();
 router.post('/', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), order_controller_1.orderControllers.createOrderIntoDB);
-router.get('/', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), order_controller_1.orderControllers.getOrdersFromDB);
-router.patch('/:id', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), (0, validateData_1.default)(order_validation_1.orderValidations.orderStatusValidationSchema), order_controller_1.orderControllers.updateOrderStatus);
+router.get('/', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user, user_constant_1.ROLE.manager), order_controller_1.orderControllers.getOrdersFromDB);
+router.patch('/:id', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user, user_constant_1.ROLE.manager), (0, validateData_1.default)(order_validation_1.orderValidations.orderStatusValidationSchema), order_controller_1.orderControllers.updateOrderStatus);
 exports.orderRoutes = router;

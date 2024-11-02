@@ -11,14 +11,11 @@ const createMealValidationSchema = Joi.object({
       'any.required': 'Meal name is required.',
     }),
 
-    type: Joi.string()
-      .valid('breakfast', 'lunch', 'dinner')
-      .required()
-      .messages({
-        'string.base': 'Meal type must be a text.',
-        'any.only': 'Meal type must be one of breakfast, lunch, or dinner.',
-        'any.required': 'Meal type is required.',
-      }),
+    type: Joi.string().valid('সকাল', 'দুপুর', 'রাত').required().messages({
+      'string.base': 'Meal type must be a text.',
+      'any.only': 'Meal type must be one of সকাল, দুপুর, or রাত.',
+      'any.required': 'Meal type is required.',
+    }),
 
     price: Joi.number().positive().precision(2).required().messages({
       'number.base': 'Price must be a number.',

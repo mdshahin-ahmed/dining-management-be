@@ -6,7 +6,11 @@ import validateData from '../../../middlewares/validateData'
 import { userValidations } from './user.validation'
 const router = express.Router()
 
-router.get('/me', auth(ROLE.admin, ROLE.user), userControllers.getMe)
+router.get(
+  '/me',
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  userControllers.getMe,
+)
 router.get('/all', auth(ROLE.admin), userControllers.getUsers)
 router.patch(
   '/add-balance',

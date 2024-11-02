@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.post(
   '/recharge',
-  auth(ROLE.admin),
+  auth(ROLE.admin, ROLE.user),
   validateData(statementValidations.RechargeBalanceSchema),
   statementControllers.createRechargeIntoDB,
 )

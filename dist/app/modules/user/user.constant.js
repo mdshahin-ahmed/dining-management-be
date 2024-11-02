@@ -4,5 +4,6 @@ exports.userSearchableFields = exports.ROLE = void 0;
 exports.ROLE = {
     admin: 'admin',
     user: 'user',
+    manager: 'manager',
 };
 exports.userSearchableFields = ['name', 'userId'];

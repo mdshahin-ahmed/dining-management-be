@@ -14,12 +14,9 @@ const createMealValidationSchema = joi_1.default.object({
             'string.max': 'Meal name must be less than or equal to 30 characters long.',
             'any.required': 'Meal name is required.',
         }),
-        type: joi_1.default.string()
-            .valid('breakfast', 'lunch', 'dinner')
-            .required()
-            .messages({
+        type: joi_1.default.string().valid('সকাল', 'দুপুর', 'রাত').required().messages({
             'string.base': 'Meal type must be a text.',
-            'any.only': 'Meal type must be one of breakfast, lunch, or dinner.',
+            'any.only': 'Meal type must be one of সকাল, দুপুর, or রাত.',
             'any.required': 'Meal type is required.',
         }),
         price: joi_1.default.number().positive().precision(2).required().messages({

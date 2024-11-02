@@ -1,6 +1,6 @@
 export interface IMeal {
   name: string
-  type: 'breakfast' | 'lunch' | 'dinner'
+  type: 'সকাল' | 'দুপুর' | 'রাত'
   price: number
   stock: number
   description: string

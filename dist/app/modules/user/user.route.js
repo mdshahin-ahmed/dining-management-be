@@ -11,7 +11,7 @@ const user_controller_1 = require("./user.controller");
 const validateData_1 = __importDefault(require("../../../middlewares/validateData"));
 const user_validation_1 = require("./user.validation");
 const router = express_1.default.Router();
-router.get('/me', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), user_controller_1.userControllers.getMe);
+router.get('/me', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user, user_constant_1.ROLE.manager), user_controller_1.userControllers.getMe);
 router.get('/all', (0, auth_1.default)(user_constant_1.ROLE.admin), user_controller_1.userControllers.getUsers);
 router.patch('/add-balance', (0, auth_1.default)(user_constant_1.ROLE.admin), (0, validateData_1.default)(user_validation_1.userValidations.addBalanceSchema), user_controller_1.userControllers.addBalance);
 exports.userRouter = router;

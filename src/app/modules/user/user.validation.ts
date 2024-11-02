@@ -39,9 +39,9 @@ const createAdminValidationSchema = Joi.object({
     room: Joi.string().min(1).max(4).required(),
     password: Joi.string().min(5).max(30).required(),
     userId: Joi.string().required(),
-    role: Joi.string().valid('admin', 'user').required().messages({
+    role: Joi.string().valid('admin', 'manager', 'user').required().messages({
       'string.base': 'Role must be a text.',
-      'any.only': 'Role must be one of admin or user',
+      'any.only': 'Role must be one of admin or manager or user',
       'any.required': 'Role is required.',
     }),
   }),

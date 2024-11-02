@@ -9,7 +9,7 @@ export interface IUser {
   password: string
   balance: number
   userId: string
-  role: 'user' | 'admin'
+  role: 'admin' | 'manager' | 'user'
 }
 
 export type TRole = keyof typeof ROLE

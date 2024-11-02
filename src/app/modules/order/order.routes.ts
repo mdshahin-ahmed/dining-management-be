@@ -11,10 +11,14 @@ router.post(
   auth(ROLE.admin, ROLE.user),
   orderControllers.createOrderIntoDB,
 )
-router.get('/', auth(ROLE.admin, ROLE.user), orderControllers.getOrdersFromDB)
+router.get(
+  '/',
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  orderControllers.getOrdersFromDB,
+)
 router.patch(
   '/:id',
-  auth(ROLE.admin, ROLE.user),
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
   validateData(orderValidations.orderStatusValidationSchema),
   orderControllers.updateOrderStatus,
 )
