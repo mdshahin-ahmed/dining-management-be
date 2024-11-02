@@ -13,4 +13,10 @@ router.post(
   statementControllers.createRechargeIntoDB,
 )
 
+router.get(
+  '/',
+  auth(ROLE.admin, ROLE.user),
+  statementControllers.getStatementsFromDB,
+)
+
 export const statementRoutes = router

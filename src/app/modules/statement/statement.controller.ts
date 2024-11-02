@@ -16,6 +16,20 @@ const createRechargeIntoDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getStatementsFromDB = catchAsync(async (req: Request, res: Response) => {
+  const query = req.query
+  const user = req.user
+  const result = await statementServices.getStatementsFromDB(query, user)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Statements retrieved successfully',
+    data: result,
+  })
+})
+
 export const statementControllers = {
   createRechargeIntoDB,
+  getStatementsFromDB,
 }

@@ -12,4 +12,5 @@ const statement_validation_1 = require("./statement.validation");
 const statement_controller_1 = require("./statement.controller");
 const router = express_1.default.Router();
 router.post('/recharge', (0, auth_1.default)(user_constant_1.ROLE.admin), (0, validateData_1.default)(statement_validation_1.statementValidations.RechargeBalanceSchema), statement_controller_1.statementControllers.createRechargeIntoDB);
+router.get('/', (0, auth_1.default)(user_constant_1.ROLE.admin, user_constant_1.ROLE.user), statement_controller_1.statementControllers.getStatementsFromDB);
 exports.statementRoutes = router;

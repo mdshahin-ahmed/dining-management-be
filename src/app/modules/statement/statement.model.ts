@@ -3,6 +3,10 @@ import { IStatement } from './statement.interface'
 
 const statementSchema = new Schema<IStatement>(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
     type: {
       type: String,
       enum: ['nagad', 'bkash'],
@@ -18,10 +22,6 @@ const statementSchema = new Schema<IStatement>(
       required: true,
     },
     mobile: {
-      type: String,
-      required: true,
-    },
-    name: {
       type: String,
       required: true,
     },

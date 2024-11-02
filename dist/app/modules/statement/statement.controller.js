@@ -27,6 +27,18 @@ const createRechargeIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(v
         data: result,
     });
 }));
+const getStatementsFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = req.query;
+    const user = req.user;
+    const result = yield statement_service_1.statementServices.getStatementsFromDB(query, user);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: 200,
+        message: 'Statements retrieved successfully',
+        data: result,
+    });
+}));
 exports.statementControllers = {
     createRechargeIntoDB,
+    getStatementsFromDB,
 };

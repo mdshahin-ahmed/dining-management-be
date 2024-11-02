@@ -1,9 +1,11 @@
+import { Types } from 'mongoose'
+
 export interface IStatement {
+  user: Types.ObjectId
   type: 'nagad' | 'bkash'
   mobile: string
   amount: number
   transactionNumber: string
-  name: string
   prevBalance: number
   newBalance: number
   status: 'pending' | 'approved'

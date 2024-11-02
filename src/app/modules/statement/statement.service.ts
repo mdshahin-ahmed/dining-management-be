@@ -6,6 +6,8 @@ import AppError from '../../errors/app.error'
 import httpStatus from 'http-status'
 import { User } from '../user/user.model'
 import { Statement } from './statement.model'
+import QueryBuilder from '../../builder/QueryBuilder'
+import { statementSearchableFields } from './statement.constant'
 
 const createRechargeIntoDB = async (user: JwtPayload, payload: IStatement) => {
   const session = await startSession()
@@ -32,7 +34,7 @@ const createRechargeIntoDB = async (user: JwtPayload, payload: IStatement) => {
       }
 
       // Add balance
-      await User.findOneAndUpdate(
+      const addBalance = await User.findByIdAndUpdate(
         isUserExists?._id,
         {
           balance: isUserExists?.balance + payload?.amount,
@@ -40,16 +42,23 @@ const createRechargeIntoDB = async (user: JwtPayload, payload: IStatement) => {
         { session, new: true },
       )
 
+      if (!addBalance?.balance) {
+        throw new AppError(
+          httpStatus.INTERNAL_SERVER_ERROR,
+          "Can't add Balance",
+          "Can't add balance",
+        )
+      }
+
       const data = {
+        user: isUserExists?._id,
         type: payload?.type,
         mobile: payload?.mobile,
         amount: payload?.amount,
         transactionNumber: payload?.transactionNumber,
-        name: isUserExists?.name,
         prevBalance: isUserExists?.balance,
-        newBalance: isUserExists?.balance + payload?.amount,
+        newBalance: addBalance?.balance,
       }
-
       const statement = await Statement.create([data], { session })
       return statement[0]
     })
@@ -65,4 +74,30 @@ const createRechargeIntoDB = async (user: JwtPayload, payload: IStatement) => {
   }
 }
 
-export const statementServices = { createRechargeIntoDB }
+const getStatementsFromDB = async (
+  query: Record<string, unknown>,
+  user: JwtPayload,
+) => {
+  // const result = await Order.find({}).populate('user', 'name')
+  // return result
+  const statementQuery = new QueryBuilder(
+    Statement.find().populate('user', 'name'),
+    query,
+    user,
+  )
+    .search(statementSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+
+  const meta = await statementQuery.countTotal()
+  const result = await statementQuery.modelQuery
+
+  return {
+    meta,
+    result,
+  }
+}
+
+export const statementServices = { createRechargeIntoDB, getStatementsFromDB }

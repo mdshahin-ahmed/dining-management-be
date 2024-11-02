@@ -64,7 +64,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
 
       // Decrease quantity
 
-      await Meal.findByIdAndUpdate(
+      const mealQuantity = await Meal.findByIdAndUpdate(
         isMealExist?._id,
         {
           stock: isMealExist?.stock - 1,
@@ -72,9 +72,17 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
         { session, new: true },
       )
 
+      if (!mealQuantity) {
+        throw new AppError(
+          httpStatus.INTERNAL_SERVER_ERROR,
+          "Can't add order",
+          "Can't add order",
+        )
+      }
+
       // Cut balance
 
-      await User.findOneAndUpdate(
+      const cutBalance = await User.findByIdAndUpdate(
         isUserExists?._id,
         {
           balance: isUserExists?.balance - isMealExist?.price,
@@ -82,6 +90,13 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
         { session, new: true },
       )
 
+      if (!cutBalance?.balance) {
+        throw new AppError(
+          httpStatus.INTERNAL_SERVER_ERROR,
+          'Internal Server Error',
+          'Something Went Wrong',
+        )
+      }
       // Find the last order to generate uId
       const lastOrder = await Order.findOne()
         .sort({ createdAt: -1 })

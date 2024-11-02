@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Statement = void 0;
 const mongoose_1 = require("mongoose");
 const statementSchema = new mongoose_1.Schema({
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     type: {
         type: String,
         enum: ['nagad', 'bkash'],
@@ -21,10 +25,6 @@ const statementSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    name: {
-        type: String,
-        required: true,
-    },
     prevBalance: {
         type: Number,
         required: true,
@@ -32,6 +32,11 @@ const statementSchema = new mongoose_1.Schema({
     newBalance: {
         type: Number,
         required: true,
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'approved'],
+        default: 'pending',
     },
 }, {
     timestamps: true,

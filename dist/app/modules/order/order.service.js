@@ -48,13 +48,19 @@ const createOrderIntoDB = (user, id) => __awaiter(void 0, void 0, void 0, functi
                 throw new app_error_1.default(http_status_1.default.BAD_REQUEST, 'You have no enough balance!', 'You have no enough balance!. Please Recharge');
             }
             // Decrease quantity
-            yield meal_model_1.Meal.findByIdAndUpdate(isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist._id, {
+            const mealQuantity = yield meal_model_1.Meal.findByIdAndUpdate(isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist._id, {
                 stock: (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.stock) - 1,
             }, { session, new: true });
+            if (!mealQuantity) {
+                throw new app_error_1.default(http_status_1.default.INTERNAL_SERVER_ERROR, "Can't add order", "Can't add order");
+            }
             // Cut balance
-            yield user_model_1.User.findOneAndUpdate(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id, {
+            const cutBalance = yield user_model_1.User.findByIdAndUpdate(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists._id, {
                 balance: (isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) - (isMealExist === null || isMealExist === void 0 ? void 0 : isMealExist.price),
             }, { session, new: true });
+            if (!(cutBalance === null || cutBalance === void 0 ? void 0 : cutBalance.balance)) {
+                throw new app_error_1.default(http_status_1.default.INTERNAL_SERVER_ERROR, 'Internal Server Error', 'Something Went Wrong');
+            }
             // Find the last order to generate uId
             const lastOrder = yield order_model_1.Order.findOne()
                 .sort({ createdAt: -1 })
