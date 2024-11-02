@@ -33,6 +33,11 @@ const statementSchema = new Schema<IStatement>(
       type: Number,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ['pending', 'approved'],
+      default: 'pending',
+    },
   },
   {
     timestamps: true,

@@ -6,4 +6,5 @@ export interface IStatement {
   name: string
   prevBalance: number
   newBalance: number
+  status: 'pending' | 'approved'
 }
