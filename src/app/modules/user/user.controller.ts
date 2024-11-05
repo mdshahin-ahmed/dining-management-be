@@ -41,20 +41,9 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-const addBalance = catchAsync(async (req: Request, res: Response) => {
-  const result = await userServices.addBalance(req.body)
-  sendResponse(res, {
-    success: true,
-    statusCode: 200,
-    message: 'Balance added successfully!',
-    data: result,
-  })
-})
-
 export const userControllers = {
   createUser,
   createAdmin,
   getMe,
   getUsers,
-  addBalance,
 }

@@ -70,29 +70,10 @@ const getUsers = async (query: Record<string, unknown>) => {
     result,
   }
 }
-const addBalance = async (payload: { id: string; balance: number }) => {
-  const isUserExists = await User.findById(payload?.id)
-  if (!isUserExists) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'User not found',
-      'User not found!',
-    )
-  }
-  const result = await User.findByIdAndUpdate(
-    payload?.id,
-    {
-      balance: Number(isUserExists?.balance) + Number(payload.balance),
-    },
-    { new: true },
-  )
-  return result
-}
 
 export const userServices = {
   createUserIntoDB,
   createAdminIntoDB,
   getMe,
   getUsers,
-  addBalance,
 }

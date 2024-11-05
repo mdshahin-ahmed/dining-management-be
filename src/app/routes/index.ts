@@ -4,6 +4,7 @@ import { userRouter } from '../modules/user/user.route'
 import { mealRoutes } from '../modules/meal/meal.routes'
 import { orderRoutes } from '../modules/order/order.routes'
 import { statementRoutes } from '../modules/statement/statement.routes'
+import { balanceRoutes } from '../modules/balance/balance.routes'
 
 const router = Router()
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/statement',
     route: statementRoutes,
+  },
+  {
+    path: '/balance',
+    route: balanceRoutes,
   },
 ]
 
