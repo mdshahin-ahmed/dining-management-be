@@ -76,4 +76,18 @@ const getStatementsFromDB = (query, user) => __awaiter(void 0, void 0, void 0, f
         result,
     };
 });
-exports.statementServices = { createRechargeIntoDB, getStatementsFromDB };
+const updateStatementStatus = (id, status) => __awaiter(void 0, void 0, void 0, function* () {
+    const isStatementExist = yield statement_model_1.Statement.findById(id);
+    if (!isStatementExist) {
+        throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'Statement not found', 'Statement not found!');
+    }
+    const result = yield statement_model_1.Statement.findByIdAndUpdate(id, status, {
+        new: true,
+    });
+    return result;
+});
+exports.statementServices = {
+    createRechargeIntoDB,
+    getStatementsFromDB,
+    updateStatementStatus,
+};

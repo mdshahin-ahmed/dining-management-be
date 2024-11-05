@@ -100,4 +100,27 @@ const getStatementsFromDB = async (
   }
 }
 
-export const statementServices = { createRechargeIntoDB, getStatementsFromDB }
+const updateStatementStatus = async (
+  id: string,
+  status: { status: string },
+) => {
+  const isStatementExist = await Statement.findById(id)
+  if (!isStatementExist) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Statement not found',
+      'Statement not found!',
+    )
+  }
+
+  const result = await Statement.findByIdAndUpdate(id, status, {
+    new: true,
+  })
+  return result
+}
+
+export const statementServices = {
+  createRechargeIntoDB,
+  getStatementsFromDB,
+  updateStatementStatus,
+}

@@ -29,7 +29,24 @@ const getStatementsFromDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateStatementStatus = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req?.params?.id
+    const status = req.body
+
+    const result = await statementServices.updateStatementStatus(id, status)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: 'Statement updated successfully',
+      data: result,
+    })
+  },
+)
+
 export const statementControllers = {
   createRechargeIntoDB,
   getStatementsFromDB,
+  updateStatementStatus,
 }

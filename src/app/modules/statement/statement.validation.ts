@@ -31,6 +31,16 @@ const RechargeBalanceSchema = Joi.object({
   },
 })
 
+const statementStatusValidationSchema = Joi.object({
+  body: Joi.object({
+    status: Joi.string().valid('approved').required().messages({
+      'any.only': 'Status must be approved',
+      'any.required': 'Status is required',
+    }),
+  }),
+})
+
 export const statementValidations = {
   RechargeBalanceSchema,
+  statementStatusValidationSchema,
 }

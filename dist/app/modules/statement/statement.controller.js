@@ -38,7 +38,20 @@ const getStatementsFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(vo
         data: result,
     });
 }));
+const updateStatementStatus = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const id = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.id;
+    const status = req.body;
+    const result = yield statement_service_1.statementServices.updateStatementStatus(id, status);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: 200,
+        message: 'Statement updated successfully',
+        data: result,
+    });
+}));
 exports.statementControllers = {
     createRechargeIntoDB,
     getStatementsFromDB,
+    updateStatementStatus,
 };

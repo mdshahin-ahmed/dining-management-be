@@ -19,4 +19,11 @@ router.get(
   statementControllers.getStatementsFromDB,
 )
 
+router.patch(
+  '/:id',
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  validateData(statementValidations.statementStatusValidationSchema),
+  statementControllers.updateStatementStatus,
+)
+
 export const statementRoutes = router
