@@ -25,11 +25,11 @@ router.post(
   validateData(authValidations.loginValidationSchema),
   authControllers.loginUser,
 )
-// router.post(
-//   '/change-password',
-//   auth(ROLE.admin, ROLE.user),
-//   validateData(authValidations.changePasswordValidationSchema),
-//   authControllers.changePassword,
-// )
+router.post(
+  '/change-password',
+  auth(ROLE.admin, ROLE.user),
+  validateData(authValidations.changePasswordValidationSchema),
+  authControllers.changePassword,
+)
 
 export const authRouter = router

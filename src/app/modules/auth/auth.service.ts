@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import httpStatus from 'http-status'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
 import AppError from '../../errors/app.error'
 import { User } from '../user/user.model'
@@ -55,6 +55,48 @@ const loginUser = async (payload: TLoginUser) => {
   }
 }
 
+const changePassword = async (
+  userData: JwtPayload,
+  payload: { oldPass: string; newPass: string },
+) => {
+  // checking is the user is exist
+  const user = await User.findById(userData._id).select('+password')
+
+  if (!user) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'User not found',
+      'User not found',
+    )
+  }
+
+  const currentPassword = await bcrypt.compare(payload?.oldPass, user?.password)
+
+  if (!currentPassword) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "Password doesn't match",
+      'Please provide correct password',
+    )
+  }
+
+  // hash new password
+  const newHashedPassword = await bcrypt.hash(
+    payload.newPass,
+    Number(config.bcrypt_salt_rounds),
+  )
+
+  await User.findByIdAndUpdate(
+    user?._id,
+    {
+      password: newHashedPassword,
+    },
+    { new: true },
+  )
+  return null
+}
+
 export const authServices = {
   loginUser,
+  changePassword,
 }
