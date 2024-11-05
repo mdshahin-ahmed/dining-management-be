@@ -6,6 +6,7 @@ const user_route_1 = require("../modules/user/user.route");
 const meal_routes_1 = require("../modules/meal/meal.routes");
 const order_routes_1 = require("../modules/order/order.routes");
 const statement_routes_1 = require("../modules/statement/statement.routes");
+const balance_routes_1 = require("../modules/balance/balance.routes");
 const router = (0, express_1.Router)();
 const moduleRoutes = [
     {
@@ -27,6 +28,10 @@ const moduleRoutes = [
     {
         path: '/statement',
         route: statement_routes_1.statementRoutes,
+    },
+    {
+        path: '/balance',
+        route: balance_routes_1.balanceRoutes,
     },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

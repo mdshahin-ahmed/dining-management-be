@@ -65,20 +65,9 @@ const getUsers = (query) => __awaiter(void 0, void 0, void 0, function* () {
         result,
     };
 });
-const addBalance = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUserExists = yield user_model_1.User.findById(payload === null || payload === void 0 ? void 0 : payload.id);
-    if (!isUserExists) {
-        throw new app_error_1.default(http_status_1.default.NOT_FOUND, 'User not found', 'User not found!');
-    }
-    const result = yield user_model_1.User.findByIdAndUpdate(payload === null || payload === void 0 ? void 0 : payload.id, {
-        balance: Number(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.balance) + Number(payload.balance),
-    }, { new: true });
-    return result;
-});
 exports.userServices = {
     createUserIntoDB,
     createAdminIntoDB,
     getMe,
     getUsers,
-    addBalance,
 };

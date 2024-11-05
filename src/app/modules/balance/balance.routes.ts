@@ -12,6 +12,6 @@ router.post(
   validateData(balanceValidations.addBalanceValidationSchema),
   balanceController.addBalanceIntoDB,
 )
-router.get('/', auth(ROLE.admin), balanceController.getBalanceFromDB)
+router.get('/', auth(ROLE.admin, ROLE.user), balanceController.getBalanceFromDB)
 
 export const balanceRoutes = router

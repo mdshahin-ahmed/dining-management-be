@@ -51,20 +51,6 @@ const createAdminValidationSchema = joi_1.default.object({
         }),
     }),
 });
-const addBalanceSchema = joi_1.default.object({
-    body: joi_1.default.object({
-        id: joi_1.default.string().required(),
-        balance: joi_1.default.number()
-            .positive() // Balance should be a positive number
-            .required()
-            .messages({
-            'number.base': 'Balance must be a number',
-            'number.positive': 'Balance must be a positive number',
-            'any.required': 'Balance is required',
-        }),
-    }),
-});
 exports.userValidations = {
     createAdminValidationSchema,
-    addBalanceSchema,
 };

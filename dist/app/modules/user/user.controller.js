@@ -52,19 +52,9 @@ const getUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
         data: result,
     });
 }));
-const addBalance = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_service_1.userServices.addBalance(req.body);
-    (0, sendResponse_1.default)(res, {
-        success: true,
-        statusCode: 200,
-        message: 'Balance added successfully!',
-        data: result,
-    });
-}));
 exports.userControllers = {
     createUser,
     createAdmin,
     getMe,
     getUsers,
-    addBalance,
 };
