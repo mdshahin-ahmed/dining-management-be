@@ -41,9 +41,7 @@ const createAdminIntoDB = async (payload: IUser) => {
 
 const getMe = async (payload: JwtPayload) => {
   // checking if the user is exist
-  const isUserExists = await User.findOne({
-    email: payload?.email,
-  })
+  const isUserExists = await User.findById(payload?._id)
   if (!isUserExists) {
     throw new AppError(
       httpStatus.NOT_FOUND,
@@ -71,9 +69,27 @@ const getUsers = async (query: Record<string, unknown>) => {
   }
 }
 
+const updateUserProfile = async (
+  id: string,
+  imageUrl: { imageURL: string },
+) => {
+  const isUserExists = await User.findById(id)
+  if (!isUserExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'User not found',
+      'User not found!',
+    )
+  }
+
+  const result = await User.findByIdAndUpdate(id, imageUrl, { new: true })
+  return result
+}
+
 export const userServices = {
   createUserIntoDB,
   createAdminIntoDB,
   getMe,
   getUsers,
+  updateUserProfile,
 }

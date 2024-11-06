@@ -47,6 +47,19 @@ const createAdminValidationSchema = Joi.object({
   }),
 })
 
+const imageUrlValidationSchema = Joi.object({
+  body: Joi.object({
+    imageUrl: Joi.string()
+      .uri({ scheme: ['http', 'https'] }) // Ensures it's a valid URL with http or https
+      .required()
+      .messages({
+        'string.uri': 'Please provide a valid image',
+        'any.required': 'Image URL is required.',
+      }),
+  }),
+})
+
 export const userValidations = {
   createAdminValidationSchema,
+  imageUrlValidationSchema,
 }

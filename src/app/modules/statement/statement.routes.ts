@@ -21,7 +21,7 @@ router.get(
 
 router.patch(
   '/:id',
-  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  auth(ROLE.admin),
   validateData(statementValidations.statementStatusValidationSchema),
   statementControllers.updateStatementStatus,
 )

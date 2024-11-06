@@ -30,6 +30,10 @@ const userSchema = new Schema<IUser>(
       required: true,
       select: 0,
     },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
     balance: {
       type: Number,
       required: true,

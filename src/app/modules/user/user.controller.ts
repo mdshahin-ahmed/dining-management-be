@@ -40,10 +40,22 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const updateUserProfile = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const data = req?.body
+  const result = await userServices.updateUserProfile(id, data)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Profile updated successfully!',
+    data: result,
+  })
+})
 
 export const userControllers = {
   createUser,
   createAdmin,
   getMe,
   getUsers,
+  updateUserProfile,
 }
