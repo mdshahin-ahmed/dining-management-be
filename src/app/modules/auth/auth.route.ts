@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.post(
   '/signup-admin',
-  auth(ROLE.admin),
+  // auth(ROLE.admin),
   validateData(userValidations.createAdminValidationSchema),
   userControllers.createAdmin,
 )

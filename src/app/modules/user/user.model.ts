@@ -32,7 +32,8 @@ const userSchema = new Schema<IUser>(
     },
     imageUrl: {
       type: String,
-      required: true,
+      // required: true,
+      // default: '',
     },
     balance: {
       type: Number,
