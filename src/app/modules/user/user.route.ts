@@ -13,8 +13,8 @@ router.get(
 )
 router.get('/all', auth(ROLE.admin), userControllers.getUsers)
 router.patch(
-  '/:id',
-  auth(ROLE.admin),
+  '/profile',
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
   validateData(userValidations.imageUrlValidationSchema),
   userControllers.updateUserProfile,
 )

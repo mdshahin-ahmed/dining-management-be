@@ -70,10 +70,10 @@ const getUsers = async (query: Record<string, unknown>) => {
 }
 
 const updateUserProfile = async (
-  id: string,
+  user: JwtPayload,
   imageUrl: { imageURL: string },
 ) => {
-  const isUserExists = await User.findById(id)
+  const isUserExists = await User.findById(user?._id)
   if (!isUserExists) {
     throw new AppError(
       httpStatus.NOT_FOUND,
@@ -82,7 +82,9 @@ const updateUserProfile = async (
     )
   }
 
-  const result = await User.findByIdAndUpdate(id, imageUrl, { new: true })
+  const result = await User.findByIdAndUpdate(user?._id, imageUrl, {
+    new: true,
+  })
   return result
 }
 

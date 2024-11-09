@@ -41,9 +41,9 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
   })
 })
 const updateUserProfile = catchAsync(async (req: Request, res: Response) => {
-  const id = req?.params?.id
+  const user = req?.user
   const data = req?.body
-  const result = await userServices.updateUserProfile(id, data)
+  const result = await userServices.updateUserProfile(user, data)
   sendResponse(res, {
     success: true,
     statusCode: 200,
