@@ -51,6 +51,18 @@ const getMe = async (payload: JwtPayload) => {
   }
   return isUserExists
 }
+const getUserById = async (id: string) => {
+  // checking if the user is exist
+  const isUserExists = await User.findById(id)
+  if (!isUserExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'User not found',
+      'User not found!',
+    )
+  }
+  return isUserExists
+}
 const getUsers = async (query: Record<string, unknown>) => {
   // checking if the user is exist
   const usersQuery = new QueryBuilder(User.find(), query)
@@ -97,6 +109,35 @@ const updateUserProfile = async (
   })
   return result
 }
+const updateUser = async (id: string, payload: IUser) => {
+  const isUserExists = await User.findById(id)
+  if (!isUserExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'User not found',
+      'User not found!',
+    )
+  }
+
+  const result = await User.findByIdAndUpdate(id, payload, {
+    new: true,
+  })
+  return result
+}
+
+const deleteUser = async (id: string) => {
+  const isUserExists = await User.findById(id)
+  if (!isUserExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'User not found',
+      'User not found!',
+    )
+  }
+
+  const result = await User.findByIdAndDelete(id)
+  return result
+}
 
 export const userServices = {
   createUserIntoDB,
@@ -104,4 +145,7 @@ export const userServices = {
   getMe,
   getUsers,
   updateUserProfile,
+  updateUser,
+  getUserById,
+  deleteUser,
 }

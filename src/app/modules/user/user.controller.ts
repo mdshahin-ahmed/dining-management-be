@@ -31,6 +31,16 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const getUserById = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const result = await userServices.getUserById(id)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'User retrieved successfully!',
+    data: result,
+  })
+})
 const getUsers = catchAsync(async (req: Request, res: Response) => {
   const result = await userServices.getUsers(req?.query)
   sendResponse(res, {
@@ -52,10 +62,36 @@ const updateUserProfile = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateUser = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const data = req?.body
+  const result = await userServices.updateUser(id, data)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'User updated successfully!',
+    data: result,
+  })
+})
+
+const deleteUser = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const result = await userServices.deleteUser(id)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'User deleted successfully!',
+    data: result,
+  })
+})
+
 export const userControllers = {
   createUser,
   createAdmin,
   getMe,
   getUsers,
   updateUserProfile,
+  updateUser,
+  getUserById,
+  deleteUser,
 }

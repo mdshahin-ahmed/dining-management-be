@@ -18,5 +18,13 @@ router.patch(
   validateData(userValidations.imageUrlValidationSchema),
   userControllers.updateUserProfile,
 )
+router.get('/:id', auth(ROLE.admin), userControllers.getUserById)
+router.patch(
+  '/:id',
+  auth(ROLE.admin),
+  validateData(userValidations.updateUserValidationSchema),
+  userControllers.updateUser,
+)
+router.delete('/:id', auth(ROLE.admin), userControllers.deleteUser)
 
 export const userRouter = router
