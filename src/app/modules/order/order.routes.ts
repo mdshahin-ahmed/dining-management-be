@@ -17,8 +17,14 @@ router.get(
   orderControllers.getOrdersFromDB,
 )
 router.patch(
+  '/cancel/:id',
+  auth(ROLE.admin, ROLE.manager),
+  validateData(orderValidations.orderCancelValidationSchema),
+  orderControllers.cancelOrder,
+)
+router.patch(
   '/:id',
-  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  auth(ROLE.admin, ROLE.manager),
   validateData(orderValidations.orderStatusValidationSchema),
   orderControllers.updateOrderStatus,
 )

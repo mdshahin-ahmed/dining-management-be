@@ -43,8 +43,23 @@ const updateOrderStatus = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const cancelOrder = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const status = req.body
+
+  const result = await orderServices.cancelOrder(id, status)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Order canceled successfully',
+    data: result,
+  })
+})
+
 export const orderControllers = {
   createOrderIntoDB,
   getOrdersFromDB,
   updateOrderStatus,
+  cancelOrder,
 }

@@ -171,9 +171,70 @@ const updateOrderStatus = async (id: string, status: { status: string }) => {
   })
   return result
 }
+const cancelOrder = async (id: string, status: { status: string }) => {
+  const session = await startSession()
+
+  try {
+    const result = await session.withTransaction(async () => {
+      // check meal is exist
+      const isOrderExist = await Order.findById(id)
+      if (!isOrderExist) {
+        throw new AppError(
+          httpStatus.NOT_FOUND,
+          'Order not found',
+          'Order not found!',
+        )
+      }
+      // check user exist
+      const isUserExists = await User.findById(isOrderExist?.user).session(
+        session,
+      )
+
+      if (!isUserExists) {
+        throw new AppError(
+          httpStatus.NOT_FOUND,
+          'User not found',
+          'User not found!',
+        )
+      }
+
+      // add balance
+      const addBalance = await User.findByIdAndUpdate(
+        isUserExists?._id,
+        {
+          balance: Number(isUserExists?.balance) + Number(isOrderExist?.price),
+        },
+        { session, new: true },
+      )
+
+      if (!addBalance?.balance) {
+        throw new AppError(
+          httpStatus.INTERNAL_SERVER_ERROR,
+          'Internal Server Error',
+          'Something Went Wrong',
+        )
+      }
+
+      const result = await Order.findByIdAndUpdate(id, status, {
+        new: true,
+      })
+      return result
+    })
+    return result
+  } catch (error: any) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      error?.message || 'Order Canceled Failed',
+      error?.errorMessage || 'Order Canceled Failed',
+    )
+  } finally {
+    session.endSession()
+  }
+}
 
 export const orderServices = {
   createOrderIntoDB,
   getOrdersFromDB,
   updateOrderStatus,
+  cancelOrder,
 }
