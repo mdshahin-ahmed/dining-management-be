@@ -31,5 +31,11 @@ router.post(
   validateData(authValidations.changePasswordValidationSchema),
   authControllers.changePassword,
 )
+router.patch(
+  '/update-password',
+  auth(ROLE.admin),
+  // validateData(authValidations.changePasswordValidationSchema),
+  authControllers.updatePassword,
+)
 
 export const authRouter = router

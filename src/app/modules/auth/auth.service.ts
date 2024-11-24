@@ -95,8 +95,36 @@ const changePassword = async (
   )
   return null
 }
+const updatePassword = async (id: string, payload: { password: string }) => {
+  // checking is the user is exist
+  const user = await User.findById(id).select('+password')
+
+  if (!user) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'User not found',
+      'User not found',
+    )
+  }
+
+  // hash new password
+  const newHashedPassword = await bcrypt.hash(
+    payload.password,
+    Number(config.bcrypt_salt_rounds),
+  )
+
+  await User.findByIdAndUpdate(
+    user?._id,
+    {
+      password: newHashedPassword,
+    },
+    { new: true },
+  )
+  return null
+}
 
 export const authServices = {
   loginUser,
   changePassword,
+  updatePassword,
 }

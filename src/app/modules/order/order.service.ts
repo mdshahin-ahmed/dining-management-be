@@ -90,7 +90,7 @@ const createOrderIntoDB = async (user: JwtPayload, id: string) => {
         { session, new: true },
       )
 
-      if (!cutBalance?.balance) {
+      if (!cutBalance?.balance && cutBalance?.balance !== 0) {
         throw new AppError(
           httpStatus.INTERNAL_SERVER_ERROR,
           'Internal Server Error',

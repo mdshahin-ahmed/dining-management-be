@@ -26,8 +26,21 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const updatePassword = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.query?.id as string
+  const data = req?.body
+  const result = await authServices.updatePassword(id, data)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Password updated successfully!',
+    data: result,
+  })
+})
 
 export const authControllers = {
   loginUser,
   changePassword,
+  updatePassword,
 }

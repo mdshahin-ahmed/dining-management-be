@@ -15,7 +15,7 @@ router.post(
 router.get('/', auth(ROLE.admin), mealControllers.getMealsFromDB)
 router.get(
   '/user-meal',
-  auth(ROLE.admin, ROLE.user),
+  auth(ROLE.admin, ROLE.manager, ROLE.user),
   mealControllers.getMealsFromDB,
 )
 router.get('/:id', auth(ROLE.admin), mealControllers.getSingleMealFromDB)
