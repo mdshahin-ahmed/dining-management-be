@@ -1,0 +1,17 @@
+import express from 'express'
+import auth from '../../../middlewares/auth'
+import { ROLE } from '../user/user.constant'
+
+import { cancelReqControllers } from './cancelreq.controller'
+import validateData from '../../../middlewares/validateData'
+import { cancelReqValidations } from './cancelreq.validation'
+const router = express.Router()
+
+router.post(
+  '/',
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  validateData(cancelReqValidations.createCancelReqValidationSchema),
+  cancelReqControllers.createCancelReq,
+)
+
+export const cancelReqRoute = router

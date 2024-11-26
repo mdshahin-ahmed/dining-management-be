@@ -5,6 +5,7 @@ import { mealRoutes } from '../modules/meal/meal.routes'
 import { orderRoutes } from '../modules/order/order.routes'
 import { statementRoutes } from '../modules/statement/statement.routes'
 import { balanceRoutes } from '../modules/balance/balance.routes'
+import { cancelReqRoute } from '../modules/cancelreq/cancelreq.routes'
 
 const router = Router()
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/balance',
     route: balanceRoutes,
+  },
+  {
+    path: '/cancel',
+    route: cancelReqRoute,
   },
 ]
 
