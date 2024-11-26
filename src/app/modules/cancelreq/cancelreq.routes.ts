@@ -14,4 +14,10 @@ router.post(
   cancelReqControllers.createCancelReq,
 )
 
+router.get(
+  '/',
+  auth(ROLE.admin, ROLE.user),
+  cancelReqControllers.getCancelRequestFromDB,
+)
+
 export const cancelReqRoute = router

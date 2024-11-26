@@ -13,7 +13,22 @@ const createCancelReq = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const getCancelRequestFromDB = catchAsync(
+  async (req: Request, res: Response) => {
+    const query = req.query
+    const user = req.user
+    const result = await cancelReqServices.getCancelRequestFromDB(query, user)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: 'Cancel request retrieved successfully',
+      data: result,
+    })
+  },
+)
 
 export const cancelReqControllers = {
   createCancelReq,
+  getCancelRequestFromDB,
 }
