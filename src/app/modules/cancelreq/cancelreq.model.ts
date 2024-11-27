@@ -22,7 +22,7 @@ const cancelReqSchema = new Schema<ICancelReq>(
     },
     status: {
       type: String,
-      enum: ['pending', 'reject', 'approved'],
+      enum: ['pending', 'canceled', 'approved'],
       default: 'pending',
       required: true,
     },

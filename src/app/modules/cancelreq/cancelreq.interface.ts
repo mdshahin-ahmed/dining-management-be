@@ -5,5 +5,5 @@ export interface ICancelReq {
   mealType: string
   mealName: string
   reason: string
-  status: 'pending' | 'approved' | 'reject'
+  status: 'pending' | 'approved' | 'canceled'
 }
