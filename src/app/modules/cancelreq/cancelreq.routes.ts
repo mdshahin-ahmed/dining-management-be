@@ -20,4 +20,11 @@ router.get(
   cancelReqControllers.getCancelRequestFromDB,
 )
 
+router.patch(
+  '/:id',
+  auth(ROLE.admin),
+  validateData(cancelReqValidations.cancelReqStatusValidationSchema),
+  cancelReqControllers.updateCancelReqStatus,
+)
+
 export const cancelReqRoute = router

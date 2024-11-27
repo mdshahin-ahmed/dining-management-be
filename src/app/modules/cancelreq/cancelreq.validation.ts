@@ -18,6 +18,19 @@ const createCancelReqValidationSchema = Joi.object({
   }),
 })
 
+const cancelReqStatusValidationSchema = Joi.object({
+  body: Joi.object({
+    status: Joi.string()
+      .valid('approved', 'reject', 'pending')
+      .required()
+      .messages({
+        'any.only': 'Status must be approved or reject or pending',
+        'any.required': 'Status is required',
+      }),
+  }),
+})
+
 export const cancelReqValidations = {
   createCancelReqValidationSchema,
+  cancelReqStatusValidationSchema,
 }

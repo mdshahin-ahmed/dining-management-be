@@ -28,7 +28,24 @@ const getCancelRequestFromDB = catchAsync(
   },
 )
 
+const updateCancelReqStatus = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req?.params?.id
+    const status = req.body
+
+    const result = await cancelReqServices.updateCancelReqStatus(id, status)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: 'Cancel request updated successfully',
+      data: result,
+    })
+  },
+)
+
 export const cancelReqControllers = {
   createCancelReq,
   getCancelRequestFromDB,
+  updateCancelReqStatus,
 }

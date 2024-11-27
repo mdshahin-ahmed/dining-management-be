@@ -47,7 +47,27 @@ const getCancelRequestFromDB = async (
   }
 }
 
+const updateCancelReqStatus = async (
+  id: string,
+  status: { status: string },
+) => {
+  const isCancelReqExist = await CancelReq.findById(id)
+  if (!isCancelReqExist) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Cancel request not found',
+      'Cancel request not found!',
+    )
+  }
+
+  const result = await CancelReq.findByIdAndUpdate(id, status, {
+    new: true,
+  })
+  return result
+}
+
 export const cancelReqServices = {
   createCancelReqIntoDB,
   getCancelRequestFromDB,
+  updateCancelReqStatus,
 }
