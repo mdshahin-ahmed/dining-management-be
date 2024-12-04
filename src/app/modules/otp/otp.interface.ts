@@ -1,4 +1,5 @@
 export interface IOtp {
   email: string
-  opt: string
+  otp: string
+  createdAt: Date
 }
