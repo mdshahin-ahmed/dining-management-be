@@ -48,12 +48,6 @@ const verifyOtp = async (payload: { email: string; otp: string }) => {
   if (!isUserExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Wrong email!', 'User not found!')
   }
-  const otp = Math.floor(100000 + Math.random() * 900000)
-  await Otp.findOneAndUpdate(
-    { email: payload?.email }, // Match the email
-    { otp: otp, createdAt: Date.now() }, // Update OTP and reset the creation time
-    { upsert: true, new: true }, // Create new if not found and return the updated document
-  )
 
   return null
 }
