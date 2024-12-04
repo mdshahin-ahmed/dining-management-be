@@ -12,5 +12,11 @@ router.post(
   validateData(otpValidations.otpValidationSchema),
   otpControllers.createOTPIntoDB,
 )
+router.get(
+  '/',
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
+  validateData(otpValidations.otpValidationSchema),
+  otpControllers.createOTPIntoDB,
+)
 
 export const otpRoute = router

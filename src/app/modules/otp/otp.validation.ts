@@ -7,5 +7,10 @@ const otpValidationSchema = Joi.object({
       .required(),
   }),
 })
+const verifyOtpValidationSchema = Joi.object({
+  body: Joi.object({
+    otp: Joi.string().length(6),
+  }),
+})
 
-export const otpValidations = { otpValidationSchema }
+export const otpValidations = { otpValidationSchema, verifyOtpValidationSchema }

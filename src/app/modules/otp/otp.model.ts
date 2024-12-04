@@ -10,7 +10,7 @@ const otpSchema = new Schema<IOtp>({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 300, // OTP will expire in 5 minutes
+    expires: 600, // OTP will expire in 10 minutes
   },
 })
 
