@@ -6,6 +6,7 @@ import { orderRoutes } from '../modules/order/order.routes'
 import { statementRoutes } from '../modules/statement/statement.routes'
 import { balanceRoutes } from '../modules/balance/balance.routes'
 import { cancelReqRoute } from '../modules/cancelreq/cancelreq.routes'
+import { otpRoute } from '../modules/otp/otp.routes'
 
 const router = Router()
 
@@ -37,6 +38,10 @@ const moduleRoutes = [
   {
     path: '/cancel',
     route: cancelReqRoute,
+  },
+  {
+    path: '/otp',
+    route: otpRoute,
   },
 ]
 
