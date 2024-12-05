@@ -16,9 +16,20 @@ const changePasswordValidationSchema = Joi.object({
   }),
 })
 
+const updatePasswordValidationSchema = Joi.object({
+  body: Joi.object({
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
+    password: Joi.string().min(5).max(30).required(),
+    otp: Joi.string().length(6),
+  }),
+})
+
 export default changePasswordValidationSchema
 
 export const authValidations = {
   loginValidationSchema,
   changePasswordValidationSchema,
+  updatePasswordValidationSchema,
 }

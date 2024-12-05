@@ -12,5 +12,14 @@ const createOTPIntoDB = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const verifyOtp = catchAsync(async (req: Request, res: Response) => {
+  const result = await otpServices.verifyOtp(req.body)
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Otp Verified',
+    data: result,
+  })
+})
 
-export const otpControllers = { createOTPIntoDB }
+export const otpControllers = { createOTPIntoDB, verifyOtp }

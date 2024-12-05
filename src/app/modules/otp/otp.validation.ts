@@ -9,7 +9,10 @@ const otpValidationSchema = Joi.object({
 })
 const verifyOtpValidationSchema = Joi.object({
   body: Joi.object({
-    otp: Joi.string().length(6),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
+    otp: Joi.string().length(6).required(),
   }),
 })
 

@@ -27,9 +27,8 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
   })
 })
 const updatePassword = catchAsync(async (req: Request, res: Response) => {
-  const id = req?.query?.id as string
   const data = req?.body
-  const result = await authServices.updatePassword(id, data)
+  const result = await authServices.updatePassword(data)
 
   sendResponse(res, {
     success: true,

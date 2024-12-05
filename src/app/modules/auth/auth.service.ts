@@ -5,6 +5,7 @@ import config from '../../config'
 import AppError from '../../errors/app.error'
 import { User } from '../user/user.model'
 import { TLoginUser } from './auth.interface'
+import { Otp } from '../otp/otp.model'
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -95,15 +96,32 @@ const changePassword = async (
   )
   return null
 }
-const updatePassword = async (id: string, payload: { password: string }) => {
+const updatePassword = async (payload: {
+  email: string
+  password: string
+  otp: string
+}) => {
   // checking is the user is exist
-  const user = await User.findById(id).select('+password')
+  const user = await User.findOne({ email: payload?.email }).select('+password')
 
   if (!user) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       'User not found',
       'User not found',
+    )
+  }
+
+  const verifyOtp = await Otp.findOne({
+    email: payload?.email,
+    otp: payload.otp,
+  })
+
+  if (!verifyOtp) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Invalid OTP',
+      'Please provide a valid OTP',
     )
   }
 

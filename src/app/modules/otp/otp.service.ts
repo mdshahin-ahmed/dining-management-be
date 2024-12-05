@@ -27,9 +27,9 @@ const createOTPIntoDB = async (payload: { email: string }) => {
         <body>
           <div class="container">
             <div>
-              <h2>Welcome to Our Service!</h2>
+              <h2>You request to reset your password!</h2>
             </div>
-            <div>
+            <div>              
               <h3>This otp will be expired after 10 minutes! Hurry up!!!</h3>
               <h4>Please enter this OTP: ${otp}</h4>
             </div>
@@ -49,7 +49,20 @@ const verifyOtp = async (payload: { email: string; otp: string }) => {
     throw new AppError(httpStatus.NOT_FOUND, 'Wrong email!', 'User not found!')
   }
 
-  return null
+  const result = await Otp.findOne({ email: payload?.email, otp: payload.otp })
+
+  if (!result) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Invalid OTP',
+      'Please provide a valid OTP',
+    )
+  }
+
+  return {
+    success: true,
+    otp: result.otp,
+  }
 }
 
 export const otpServices = { createOTPIntoDB, verifyOtp }
