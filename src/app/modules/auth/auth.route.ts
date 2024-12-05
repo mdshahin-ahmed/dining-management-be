@@ -33,7 +33,7 @@ router.post(
 )
 router.patch(
   '/update-password',
-  auth(ROLE.admin, ROLE.manager, ROLE.user),
+  // auth(ROLE.admin, ROLE.manager, ROLE.user),
   validateData(authValidations.updatePasswordValidationSchema),
   authControllers.updatePassword,
 )
