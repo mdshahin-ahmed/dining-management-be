@@ -39,7 +39,7 @@ const createOTPIntoDB = async (payload: { email: string }) => {
       `,
   )
 
-  return null
+  return { email: isUserExists?.email }
 }
 
 const verifyOtp = async (payload: { email: string; otp: string }) => {

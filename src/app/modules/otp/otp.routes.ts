@@ -10,8 +10,8 @@ router.post(
   validateData(otpValidations.otpValidationSchema),
   otpControllers.createOTPIntoDB,
 )
-router.get(
-  '/',
+router.post(
+  '/verify',
   // auth(ROLE.admin, ROLE.user, ROLE.manager),
   validateData(otpValidations.verifyOtpValidationSchema),
   otpControllers.verifyOtp,

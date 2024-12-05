@@ -1,24 +1,31 @@
 import nodemailer from 'nodemailer'
 import config from '../config'
+import AppError from '../errors/app.error'
+import httpStatus from 'http-status'
 
 export const sendEmail = async (to: string, html: string) => {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    // port: 587,
-    port: 465,
-    secure: true,
-    auth: {
-      // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-      user: config.app_email,
-      pass: config.app_password,
-    },
-  })
+  try {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // Use SSL
+      auth: {
+        user: config.app_email,
+        pass: config.app_password,
+      },
+    })
 
-  await transporter.sendMail({
-    from: config.app_email, // sender address
-    to, // list of receivers
-    subject: 'Reset your ASFCS password within 10 minutes!', // Subject line
-    text: '', // plain text body
-    html, // html body
-  })
+    await transporter.sendMail({
+      from: config.app_email, // Sender address
+      to, // Receiver's email
+      subject: 'Reset your ASFCS password within 10 minutes!', // Subject line
+      text: '', // Plain text body (optional)
+      html, // HTML body
+    })
+  } catch (error) {
+    // Log the error
+    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to sent OTP', 'Failed')
+
+    // return { success: false, error: error.message || 'Unknown error' };
+  }
 }
