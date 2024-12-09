@@ -85,7 +85,7 @@ const getBalanceFromDB = async (
   // const result = await Order.find({}).populate('user', 'name')
   // return result
   const statementQuery = new QueryBuilder(
-    Balance.find().populate('user', 'name'),
+    Balance.find().populate('user', ['name', 'userId']),
     query,
     user,
   )

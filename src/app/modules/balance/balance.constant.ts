@@ -1,1 +1,1 @@
-export const balanceSearchableFields = ['amount']
+export const balanceSearchableFields = ['userId']

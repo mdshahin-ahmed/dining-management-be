@@ -81,7 +81,7 @@ const getStatementsFromDB = async (
   // const result = await Order.find({}).populate('user', 'name')
   // return result
   const statementQuery = new QueryBuilder(
-    Statement.find().populate('user', 'name'),
+    Statement.find().populate('user', ['name', 'userId']),
     query,
     user,
   )

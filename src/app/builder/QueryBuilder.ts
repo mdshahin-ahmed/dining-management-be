@@ -17,13 +17,19 @@ class QueryBuilder<T> {
   }
 
   search(searchableFields: string[]) {
-    const searchTerm = this?.query?.searchTerm
+    const searchTerm = this?.query?.searchTerm?.toString()?.toLowerCase()
     if (searchTerm) {
       this.modelQuery = this.modelQuery.find({
         $or: searchableFields.map(
           (field) =>
             ({
-              [field]: { $regex: searchTerm, $options: 'i' },
+              // [field]: { $regex: searchTerm, $options: 'i' },
+              $expr: {
+                $eq: [
+                  { $toLower: `$${field}` }, // Convert field value to lowercase
+                  searchTerm, // Compare with normalized searchTerm
+                ],
+              },
             }) as FilterQuery<T>,
         ),
       })
