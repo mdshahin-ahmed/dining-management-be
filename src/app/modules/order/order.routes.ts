@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.post(
   '/',
-  auth(ROLE.admin, ROLE.user),
+  auth(ROLE.admin, ROLE.user, ROLE.manager),
   orderControllers.createOrderIntoDB,
 )
 router.get(
