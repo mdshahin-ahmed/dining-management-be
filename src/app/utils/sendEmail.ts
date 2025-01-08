@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import nodemailer from 'nodemailer'
 import config from '../config'
 import AppError from '../errors/app.error'
@@ -22,9 +23,9 @@ export const sendEmail = async (to: string, html: string) => {
       text: '', // Plain text body (optional)
       html, // HTML body
     })
-  } catch (error) {
+  } catch (error: any) {
     // Log the error
-    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to sent OTP', 'Failed')
+    throw new AppError(httpStatus.BAD_REQUEST, 'Failed to sent OTP', error)
 
     // return { success: false, error: error.message || 'Unknown error' };
   }
