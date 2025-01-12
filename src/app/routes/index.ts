@@ -8,6 +8,7 @@ import { balanceRoutes } from '../modules/balance/balance.routes'
 import { cancelReqRoute } from '../modules/cancelreq/cancelreq.routes'
 import { otpRoute } from '../modules/otp/otp.routes'
 import { expenseRoutes } from '../modules/expense/expense.routes'
+import { analyticsRoutes } from '../modules/analytics/analytics.routes'
 
 const router = Router()
 
@@ -47,6 +48,10 @@ const moduleRoutes = [
   {
     path: '/expense',
     route: expenseRoutes,
+  },
+  {
+    path: '/analytics',
+    route: analyticsRoutes,
   },
 ]
 
