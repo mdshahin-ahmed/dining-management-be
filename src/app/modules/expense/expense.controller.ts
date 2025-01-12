@@ -28,7 +28,22 @@ const getExpenseListFromDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateExpense = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.params?.id
+  const payload = req.body
+
+  const result = await expenseServices.updateExpense(id, payload)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: 'Expense updated successfully',
+    data: result,
+  })
+})
+
 export const expenseControllers = {
   addExpenseIntoDB,
   getExpenseListFromDB,
+  updateExpense,
 }

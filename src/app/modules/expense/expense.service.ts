@@ -1,6 +1,8 @@
 import { JwtPayload } from 'jsonwebtoken'
 import { Expense } from './expense.model'
 import QueryBuilder from '../../builder/QueryBuilder'
+import AppError from '../../errors/app.error'
+import httpStatus from 'http-status'
 
 const addExpenseIntoDB = async (payload: {
   amount: number
@@ -32,7 +34,27 @@ const getExpenseListFromDB = async (
   }
 }
 
+const updateExpense = async (
+  id: string,
+  payload: { amount: number; description: string },
+) => {
+  const isExpenseExist = await Expense.findById(id)
+  if (!isExpenseExist) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'Expense not found',
+      'Expense not found!',
+    )
+  }
+
+  const result = await Expense.findByIdAndUpdate(id, payload, {
+    new: true,
+  })
+  return result
+}
+
 export const expenseServices = {
   addExpenseIntoDB,
   getExpenseListFromDB,
+  updateExpense,
 }

@@ -15,4 +15,11 @@ router.post(
 
 router.get('/', auth(ROLE.admin), expenseControllers.getExpenseListFromDB)
 
+router.patch(
+  '/:id',
+  auth(ROLE.admin),
+  validateData(expenseValidations.addExpenseValidationSchema),
+  expenseControllers.updateExpense,
+)
+
 export const expenseRoutes = router
