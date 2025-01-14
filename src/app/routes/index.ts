@@ -1,14 +1,15 @@
 import { Router } from 'express'
+import { analyticsRoutes } from '../modules/analytics/analytics.routes'
 import { authRouter } from '../modules/auth/auth.route'
-import { userRouter } from '../modules/user/user.route'
-import { mealRoutes } from '../modules/meal/meal.routes'
-import { orderRoutes } from '../modules/order/order.routes'
-import { statementRoutes } from '../modules/statement/statement.routes'
 import { balanceRoutes } from '../modules/balance/balance.routes'
 import { cancelReqRoute } from '../modules/cancelreq/cancelreq.routes'
-import { otpRoute } from '../modules/otp/otp.routes'
 import { expenseRoutes } from '../modules/expense/expense.routes'
-import { analyticsRoutes } from '../modules/analytics/analytics.routes'
+import { mealRoutes } from '../modules/meal/meal.routes'
+import { orderRoutes } from '../modules/order/order.routes'
+import { otpRoute } from '../modules/otp/otp.routes'
+import { statementRoutes } from '../modules/statement/statement.routes'
+import { userRouter } from '../modules/user/user.route'
+import { withdrawRoutes } from '../modules/withdraw/withdraw.routes'
 
 const router = Router()
 
@@ -52,6 +53,10 @@ const moduleRoutes = [
   {
     path: '/analytics',
     route: analyticsRoutes,
+  },
+  {
+    path: '/withdraw',
+    route: withdrawRoutes,
   },
 ]
 
