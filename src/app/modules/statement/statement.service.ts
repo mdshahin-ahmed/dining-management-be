@@ -55,6 +55,7 @@ const createRechargeIntoDB = async (user: JwtPayload, payload: IStatement) => {
         type: payload?.type,
         mobile: payload?.mobile,
         amount: payload?.amount,
+        exactAmount: payload?.exactAmount,
         transactionNumber: payload?.transactionNumber,
         prevBalance: isUserExists?.balance,
         newBalance: addBalance?.balance,

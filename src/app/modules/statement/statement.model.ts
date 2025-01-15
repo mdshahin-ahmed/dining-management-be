@@ -21,6 +21,10 @@ const statementSchema = new Schema<IStatement>(
       type: Number,
       required: true,
     },
+    exactAmount: {
+      type: Number,
+      required: true,
+    },
     mobile: {
       type: String,
       required: true,

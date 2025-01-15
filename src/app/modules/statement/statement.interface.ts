@@ -5,6 +5,7 @@ export interface IStatement {
   type: 'nagad' | 'bkash'
   mobile: string
   amount: number
+  exactAmount: number
   transactionNumber: string
   prevBalance: number
   newBalance: number

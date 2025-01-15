@@ -22,6 +22,12 @@ const RechargeBalanceSchema = Joi.object({
       'number.min': 'Amount must be at least 49',
       'any.required': 'Amount is required',
     }),
+    exactAmount: Joi.number().positive().min(49).required().messages({
+      'number.base': 'Exact amount must be a number',
+      'number.positive': 'Exact amount must be a positive number',
+      'number.min': 'Exact amount must be at least 49',
+      'any.required': 'Exact amount is required',
+    }),
     transactionNumber: Joi.string().required().messages({
       'string.base': 'Transaction number is required',
       'any.required': 'Transaction number is required',

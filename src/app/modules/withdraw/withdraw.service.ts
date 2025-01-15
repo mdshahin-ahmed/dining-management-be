@@ -89,7 +89,6 @@ const approveWithdrawReq = async (id: string) => {
           'Withdraw req not found!',
         )
       }
-
       if (isWithdrawReqExist?.status !== 'pending') {
         throw new AppError(
           httpStatus.NOT_FOUND,
@@ -168,6 +167,14 @@ const cancelWithdrawReq = async (id: string) => {
       httpStatus.NOT_FOUND,
       'Withdraw req not found',
       'Withdraw req not found!',
+    )
+  }
+
+  if (isWithdrawReqExist?.status !== 'pending') {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      `Withdraw already ${isWithdrawReqExist?.status}`,
+      `Withdraw already ${isWithdrawReqExist?.status}`,
     )
   }
   // check user exist
