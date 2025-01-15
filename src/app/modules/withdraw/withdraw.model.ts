@@ -12,10 +12,6 @@ const withdrawSchema = new Schema<IWithdraw>(
       type: Number,
       required: true,
     },
-    reason: {
-      type: String,
-      required: true,
-    },
     status: {
       type: String,
       enum: ['pending', 'canceled', 'approved'],
