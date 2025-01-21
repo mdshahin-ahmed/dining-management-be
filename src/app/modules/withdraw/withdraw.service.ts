@@ -89,13 +89,13 @@ const approveWithdrawReq = async (id: string) => {
           'Withdraw req not found!',
         )
       }
-      if (isWithdrawReqExist?.status !== 'pending') {
-        throw new AppError(
-          httpStatus.NOT_FOUND,
-          `Withdraw already ${isWithdrawReqExist?.status}`,
-          `Withdraw already ${isWithdrawReqExist?.status}`,
-        )
-      }
+      // if (isWithdrawReqExist?.status !== 'pending') {
+      //   throw new AppError(
+      //     httpStatus.NOT_FOUND,
+      //     `Withdraw already ${isWithdrawReqExist?.status}`,
+      //     `Withdraw already ${isWithdrawReqExist?.status}`,
+      //   )
+      // }
 
       // check user exist
       const isUserExists = await User.findById(
@@ -130,7 +130,7 @@ const approveWithdrawReq = async (id: string) => {
         { session, new: true },
       )
 
-      if (!minusBalance?.balance) {
+      if (!minusBalance?.balance && minusBalance?.balance !== 0) {
         throw new AppError(
           httpStatus.INTERNAL_SERVER_ERROR,
           'Internal Server Error',
