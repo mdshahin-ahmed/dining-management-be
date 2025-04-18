@@ -1,1 +1,1 @@
-export const statementSearchableFields = ['mobile']
+export const statementSearchableFields = ['mobile', 'userId']

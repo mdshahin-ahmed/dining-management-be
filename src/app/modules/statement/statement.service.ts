@@ -59,6 +59,7 @@ const createRechargeIntoDB = async (user: JwtPayload, payload: IStatement) => {
         transactionNumber: payload?.transactionNumber,
         prevBalance: isUserExists?.balance,
         newBalance: addBalance?.balance,
+        userId: isUserExists?.userId,
       }
       const statement = await Statement.create([data], { session })
       return statement[0]

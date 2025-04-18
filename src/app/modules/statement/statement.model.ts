@@ -37,6 +37,10 @@ const statementSchema = new Schema<IStatement>(
       type: Number,
       required: true,
     },
+    userId: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       enum: ['pending', 'approved'],

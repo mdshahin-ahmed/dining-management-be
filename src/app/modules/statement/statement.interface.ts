@@ -9,5 +9,6 @@ export interface IStatement {
   transactionNumber: string
   prevBalance: number
   newBalance: number
+  userId: string
   status: 'pending' | 'approved'
 }
