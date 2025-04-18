@@ -7,4 +7,5 @@ export interface IBalance {
   prevBalance: number
   newBalance: number
   status: 'approved'
+  userId: string
 }

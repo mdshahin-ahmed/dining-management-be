@@ -62,6 +62,7 @@ const addBalanceIntoDB = async (payload: { amount: number; id: string }) => {
         amount: payload?.amount,
         prevBalance: isUserExists?.balance,
         newBalance: addBalance?.balance,
+        userId: isUserExists?.userId,
       }
       const balance = await Balance.create([data], { session })
       return balance[0]

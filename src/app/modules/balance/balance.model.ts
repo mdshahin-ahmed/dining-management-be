@@ -28,6 +28,10 @@ const balanceSchema = new Schema<IBalance>(
       type: String,
       default: 'approved',
     },
+    userId: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

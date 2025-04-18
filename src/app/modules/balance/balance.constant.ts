@@ -1,1 +1,1 @@
-export const balanceSearchableFields = ['userId']
+export const balanceSearchableFields = ['userId', 'userId']
