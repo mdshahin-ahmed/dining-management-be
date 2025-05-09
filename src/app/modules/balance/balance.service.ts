@@ -32,11 +32,11 @@ const addBalanceIntoDB = async (payload: { amount: number; id: string }) => {
         )
       }
 
-      if (payload?.amount < 50) {
+      if (payload?.amount < 1) {
         throw new AppError(
           httpStatus.NOT_FOUND,
-          'Amount must be at least 50',
-          'Amount must be at least 50',
+          'Amount must be at least 1',
+          'Amount must be at least 1',
         )
       }
 
